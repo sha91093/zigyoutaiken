@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}申請者一覧 — 環境保全型農業直接支払交付金{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">申請者一覧</h1>
+  <a href="{{ url_for('applicant_new') }}" class="btn btn-primary">＋ 新規登録</a>
+</div>
+
+<form class="search-form" method="get">
+  <input type="text" name="q" value="{{ q }}" placeholder="農業者名・農業者コードで検索…" class="search-input">
+  <button type="submit" class="btn btn-secondary">検索</button>
+  {% if q %}<a href="{{ url_for('applicant_list') }}" class="btn">クリア</a>{% endif %}
+</form>
+
+{% if applicants %}
+<p class="result-count">{{ applicants | length }}件</p>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>農業者コード</th>
+      <th>氏名</th>
+      <th>フリガナ</th>
+      <th>住所</th>
+      <th>電話番号</th>
+      <th>申請件数</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in applicants %}
+    <tr>
+      <td><code>{{ a.farmer_code }}</code></td>
+      <td>{{ a.name }}</td>
+      <td>{{ a.name_kana }}</td>
+      <td>{{ a.address }}</td>
+      <td>{{ a.phone }}</td>
+      <td>{{ a.applications.count() }}件</td>
+      <td>
+        <a href="{{ url_for('applicant_detail', id=a.id) }}" class="btn btn-sm">詳細</a>
+        <a href="{{ url_for('application_new', applicant_id=a.id) }}" class="btn btn-sm btn-primary">申請受付</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty-message">
+  {% if q %}「{{ q }}」に一致する農業者が見つかりません。{% else %}農業者が登録されていません。{% endif %}
+</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}ダッシュボード — 環境保全型農業直接支払交付金{% endblock %}
+
+{% block content %}
+<h1 class="page-title">ダッシュボード</h1>
+<p class="page-subtitle">{{ stats.current_year }}年度 申請状況</p>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">登録農業者数</div>
+    <div class="stat-value">{{ stats.total_applicants }}<span class="stat-unit">名</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">申請総件数</div>
+    <div class="stat-value">{{ stats.total_applications }}<span class="stat-unit">件</span></div>
+  </div>
+  <div class="stat-card highlight">
+    <div class="stat-label">{{ stats.current_year }}年度 交付金合計</div>
+    <div class="stat-value">{{ stats.year_total | jpy }}</div>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card status-submitted">
+    <div class="stat-label">受付済</div>
+    <div class="stat-value">{{ stats.submitted }}<span class="stat-unit">件</span></div>
+    <a href="{{ url_for('application_list', status='submitted') }}" class="stat-link">一覧を見る →</a>
+  </div>
+  <div class="stat-card status-review">
+    <div class="stat-label">審査中</div>
+    <div class="stat-value">{{ stats.review }}<span class="stat-unit">件</span></div>
+    <a href="{{ url_for('application_list', status='review') }}" class="stat-link">一覧を見る →</a>
+  </div>
+  <div class="stat-card status-approved">
+    <div class="stat-label">承認済</div>
+    <div class="stat-value">{{ stats.approved }}<span class="stat-unit">件</span></div>
+    <a href="{{ url_for('application_list', status='approved') }}" class="stat-link">一覧を見る →</a>
+  </div>
+  <div class="stat-card status-paid">
+    <div class="stat-label">交付済</div>
+    <div class="stat-value">{{ stats.paid }}<span class="stat-unit">件</span></div>
+    <a href="{{ url_for('application_list', status='paid') }}" class="stat-link">一覧を見る →</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>最近の申請</h2>
+    <a href="{{ url_for('application_new') }}" class="btn btn-primary">＋ 新規申請受付</a>
+  </div>
+  {% if recent %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>申請番号</th>
+        <th>農業者名</th>
+        <th>年度</th>
+        <th>交付金額</th>
+        <th>ステータス</th>
+        <th>受付日</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in recent %}
+      <tr>
+        <td><code>{{ a.application_number }}</code></td>
+        <td>{{ a.applicant.name }}</td>
+        <td>{{ a.fiscal_year }}年度</td>
+        <td class="amount">{{ a.total_amount | jpy }}</td>
+        <td><span class="badge badge-{{ a.status }}">{{ statuses[a.status] }}</span></td>
+        <td>{{ a.submitted_at | date_jp }}</td>
+        <td><a href="{{ url_for('application_detail', id=a.id) }}" class="btn btn-sm">詳細</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty-message">申請データがありません。<a href="{{ url_for('application_new') }}">新規申請を受付</a>してください。</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}環境保全型農業直接支払交付金 管理システム{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-title">
+        <span class="header-icon">🌿</span>
+        <a href="{{ url_for('index') }}" class="header-link">
+          環境保全型農業直接支払交付金<br>
+          <small>管理システム</small>
+        </a>
+      </div>
+      <nav class="main-nav">
+        <a href="{{ url_for('index') }}">ダッシュボード</a>
+        <a href="{{ url_for('applicant_list') }}">申請者管理</a>
+        <a href="{{ url_for('application_list') }}">申請管理</a>
+        <a href="{{ url_for('application_new') }}">新規申請受付</a>
+        <a href="{{ url_for('reports') }}">集計レポート</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>環境保全型農業直接支払交付金 管理システム &copy; 自治体職員向け内部システム</p>
+  </footer>
+</body>
+</html>
