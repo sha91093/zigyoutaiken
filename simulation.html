@@ -2109,7 +2109,6 @@ let currentScene = null;
 let currentShuffledChoices = [];  // シャッフル済み選択肢
 let answered = false;
 let sceneHistory = [];        // 戻る用履歴スタック
-let sceneForwardHistory = []; // 進む用履歴スタック
 
 function shuffleChoices(choices) {
   const arr = choices.map((c, i) => ({ ...c, _orig: i }));
@@ -2140,7 +2139,6 @@ function renderScene(sceneId, addToHistory = true) {
   // 現在のシーンを履歴に積む（戻る操作のときは積まない）
   if (addToHistory && currentScene) {
     sceneHistory.push(currentScene.id);
-    sceneForwardHistory = [];  // 新しいシーンへ進むと進む履歴をリセット
   }
 
   currentScene = scene;
@@ -2153,12 +2151,11 @@ function renderScene(sceneId, addToHistory = true) {
 
   // ヘッダー右側ボタン群
   const canGoBack = sceneHistory.length > 0 || (PREV_MAP[sceneId] !== undefined);
-  const canGoForward = sceneForwardHistory.length > 0;
   const backBtnHTML = canGoBack
     ? `<button class="back-btn" onclick="goBack()">◀ 前へ</button>`
     : ``;
-  const fwdBtnHTML = canGoForward
-    ? `<button class="back-btn" onclick="goForward()">進む ▶</button>`
+  const fwdBtnHTML = scene.nextScene
+    ? `<button class="back-btn" onclick="goNext()">進む ▶</button>`
     : ``;
 
   const headerHTML = `
@@ -2207,19 +2204,10 @@ function goBack() {
   const currentId = currentScene.id;
   if (sceneHistory.length > 0) {
     const prevId = sceneHistory.pop();
-    sceneForwardHistory.push(currentId);
     renderScene(prevId, false);
   } else if (PREV_MAP[currentId]) {
-    sceneForwardHistory.push(currentId);
     renderScene(PREV_MAP[currentId], false);
   }
-}
-
-function goForward() {
-  if (sceneForwardHistory.length === 0) return;
-  const nextId = sceneForwardHistory.pop();
-  sceneHistory.push(currentScene.id);
-  renderScene(nextId, false);
 }
 
 function selectChoice(index) {
@@ -2303,7 +2291,6 @@ function goHome() {
   currentShuffledChoices = [];
   answered = false;
   sceneHistory = [];
-  sceneForwardHistory = [];
   document.getElementById("progress-fill").style.width = "0%";
   document.getElementById("progress-step").textContent = "導入";
   document.getElementById("start-screen").style.display = "block";
@@ -2316,7 +2303,6 @@ function jumpTo(sceneId) {
   currentShuffledChoices = [];
   answered = false;
   sceneHistory = [];
-  sceneForwardHistory = [];
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("scene-content").style.display = "block";
   renderScene(sceneId);
