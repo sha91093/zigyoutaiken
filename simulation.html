@@ -700,7 +700,205 @@ const SCENES = [
         }
       }
     ],
-    nextScene: "scene2"
+    nextScene: "scene2a"
+  },
+
+  // ── シーン２：書類受付・不備チェック ──────────────────
+
+  {
+    id: "scene2a",
+    badge: "シーン２",
+    title: "書類受付（１）　必要書類の確認",
+    progress: 60,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ６月上旬。田中さんが書類を持って窓口を再訪しました。
+          「一式そろえてきました」と封筒を差し出します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「先日教えてもらった書類、全部持ってきました！
+          農林水産省のHPからダウンロードして記入したんですが、
+          これで大丈夫でしょうか？」
+        </div>
+      </div>
+    `,
+    question: "受付時に確認すべき書類セットとして正しいものはどれですか？",
+    choices: [
+      {
+        text: "①共通様式第１号（計画認定申請書）②共通様式第２号（計画書）③共通様式第３号（営農活動計画書）④環境負荷低減チェックシート　の４点を確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "申請に必要な基本書類は４点セットです。<br>" +
+                "・<b>共通様式第１号</b>：計画の認定申請書（市町村への認定申請）<br>" +
+                "・<b>共通様式第２号</b>：事業計画書（取組の内容・体制）<br>" +
+                "・<b>共通様式第３号</b>：営農活動計画書（ほ場ごとの取組・面積・交付金額）<br>" +
+                "・<b>環境負荷低減チェックシート</b>：令和６年度から必須。各取組にチェック済みか確認<br>" +
+                "なお、市町村独自の様式や添付書類を別途求める場合もあります。"
+        }
+      },
+      {
+        text: "共通様式第３号（営農活動計画書）だけ確認する。他の書類は後回しでよい",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "様式第３号はほ場別の計画を記載する重要書類ですが、それ単体では申請になりません。" +
+                "計画の認定申請書（第１号）・計画書（第２号）・環境負荷低減チェックシートも" +
+                "同時に提出が必要です。特に令和６年度から必須化されたチェックシートの確認を忘れないようにしましょう。"
+        }
+      },
+      {
+        text: "農地の登記簿謄本と身分証明書を追加で要求する",
+        correct: false,
+        feedback: {
+          title: "不要な書類です",
+          body: "環境保全型農業直接支払交付金の申請において、登記簿謄本や身分証明書は基本的に求められていません。" +
+                "必要以上の書類を農業者に求めると、申請意欲をそぎ、窓口への負担感を高めます。" +
+                "求める書類は要綱・実施要領に定められたものに限りましょう。"
+        }
+      }
+    ],
+    nextScene: "scene2b"
+  },
+
+  {
+    id: "scene2b",
+    badge: "シーン２",
+    title: "書類受付（２）　不備の発見",
+    progress: 70,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          書類を確認していると、共通様式第３号（営農活動計画書）に
+          記入漏れを発見しました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号を確認すると…田んぼは３筆あるのに、
+          うち１筆のほ場名・面積・取組区分がすべて空欄のままだ。）
+        </div>
+      </div>
+    `,
+    question: "記入漏れのほ場がある場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「お手数ですが、空欄のほ場の情報をご記入いただき、再提出をお願いします」と返却する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "申請書の内容（ほ場名・面積・取組区分）は申請者本人が確認・記入すべき事項です。" +
+                "職員が勝手に補記すると、事実と異なる記載になるリスクや、" +
+                "後の実地確認時に申請者が内容を把握していないという問題が生じます。" +
+                "必ず申請者に返却し、本人に記入してもらいましょう。"
+        }
+      },
+      {
+        text: "「わかりました、こちらで農地台帳を見て補記しておきます」と受け付ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "申請書の内容は申請者自身が責任を持って記載するものです。" +
+                "職員が農地台帳等を参照して補記することは、" +
+                "本人確認なしに申請内容を変更することになり不適切です。" +
+                "空欄があれば必ず申請者に返却して記入してもらいましょう。"
+        }
+      },
+      {
+        text: "「記入漏れの１筆は今回の申請対象から除外して、２筆分で受け付けます」と処理する",
+        correct: false,
+        feedback: {
+          title: "手続き不足です",
+          body: "１筆を除外することは可能ですが、それは申請者本人が判断・同意することです。" +
+                "職員が勝手に「除外して受け付ける」と決めてはいけません。" +
+                "「除外してよいか、それとも記入して全筆申請するか」を申請者に確認し、" +
+                "本人の意思に基づいて手続きを進めましょう。"
+        }
+      }
+    ],
+    nextScene: "scene2c"
+  },
+
+  {
+    id: "scene2c",
+    badge: "シーン２",
+    title: "書類受付（３）　期限直前の対応",
+    progress: 80,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんに書類を返却して補正をお願いしました。<br>
+          ところが翌朝、上司から一言。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「田中さんの件、知ってる？今日が申請期限の６月30日だよ。
+          補正書類、今日中に来なかったらアウトになるけど、
+          ちゃんと田中さんに伝えてある？」
+        </div>
+        <div class="narration" style="margin-top:12px;">
+          田中さんに確認すると「カバークロップの作業自体は７月以降の予定です」とのことでした。
+        </div>
+      </div>
+    `,
+    question: "申請期限（本日６月30日）と取組開始時期（７月以降）について、正しい対応はどれですか？",
+    choices: [
+      {
+        text: "「申請は取組開始前に行う必要があります。本日中に補正書類をご持参いただければ、今年度の申請が可能です」と連絡する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金は「対象取組の開始前までに申請する」ことが原則であり、" +
+                "申請期限の目安は６月末です。取組開始が７月以降であれば、" +
+                "本日（６月30日）中に補正書類を提出することで今年度の申請は有効です。" +
+                "田中さんへ速やかに連絡し、本日中の持参か郵送・電子申請（eMAFF）等の方法を案内しましょう。"
+        }
+      },
+      {
+        text: "「取組開始が７月以降なら、今年度の申請は締め切りを過ぎているので来年度に申請してください」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "申請期限は「取組開始前」かつ「６月30日まで」です。" +
+                "取組開始が７月以降であれば、今日（６月30日）の申請は期限内です。" +
+                "補正書類を本日中に提出してもらえれば今年度の申請は可能です。" +
+                "誤った案内により機会損失を生じさせないよう、要綱の期限規定を正確に把握しましょう。"
+        }
+      },
+      {
+        text: "「書類の不備があったため当課の責任で期限を延長します」と田中さんに伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "市町村の担当者が独自に期限を延長することはできません。" +
+                "申請期限は要綱で定められており、自治体の裁量で変更できるものではありません。" +
+                "本日中の補正提出で間に合う可能性があるため、まずそちらを案内するのが正しい対応です。"
+        }
+      }
+    ],
+    nextScene: "scene3"
   }
 ];
 
@@ -826,10 +1024,10 @@ function renderEnd() {
   document.getElementById("scene-content").innerHTML = `
     <div style="text-align:center; padding: 48px 24px;">
       <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
-      <h2 style="color:var(--green-dark); margin-bottom:12px;">シーン１ クリア！</h2>
+      <h2 style="color:var(--green-dark); margin-bottom:12px;">シーン２ クリア！</h2>
       <p style="color:var(--text-muted); line-height:1.8;">
-        窓口相談の対応を学びました。<br>
-        次のシーン２では <strong>書類受付・不備チェック</strong> を体験します。
+        書類受付・不備チェックの対応を学びました。<br>
+        次のシーン３では <strong>取組区分の確認・交付金計算</strong> を体験します。
       </p>
     </div>
   `;
