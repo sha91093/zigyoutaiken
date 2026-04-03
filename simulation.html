@@ -700,6 +700,73 @@ const SCENES = [
         }
       }
     ],
+    nextScene: "scene1d"
+  },
+
+  {
+    id: "scene1d",
+    badge: "シーン１",
+    title: "窓口相談（４）　申請者の組織要件",
+    progress: 62,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          要件の確認が一通り終わったところで、田中さんから追加の質問がありました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「ところで、申請は私一人でできますか？
+          集落の農家仲間に声をかけないといけませんか？
+          実は隣の鈴木さんも同じようなことを考えているみたいなんですが…」
+        </div>
+      </div>
+    `,
+    question: "申請者の組織要件について、正しく案内できますか？",
+    choices: [
+      {
+        text: "「農業者であれば誰でも一人で申請できます。組織を作る必要はありません」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "本交付金の申請主体は、原則として<b>複数の農業者で構成される任意組織</b>です。" +
+                "農業者単独での申請は例外的な扱いとなり、" +
+                "①集落の耕地面積の一定割合以上を取り組む農業者、または" +
+                "②農業者で構成される法人（農協を除く）のいずれかに該当し、" +
+                "さらに<b>市町村が特に認める場合</b>に限られます。" +
+                "「誰でも一人で申請できる」という案内は誤りです。"
+        }
+      },
+      {
+        text: "「申請は農業協同組合（農協）を通じて行う必要があります」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "農協を通じた申請は要件ではありません。" +
+                "申請者は<b>農業者の組織する任意組織</b>が基本であり、農協を経由する必要はありません。" +
+                "なお、農協自体は申請主体にはなれません（農業者で構成される法人の要件から除かれています）。" +
+                "田中さんと鈴木さんが一緒に任意組織を作って申請する方法が最もスムーズです。"
+        }
+      },
+      {
+        text: "「基本は複数農業者による任意組織での申請です。田中さん一人での申請は条件が厳しく、鈴木さんと一緒に組織を作って申請する方法をお勧めします」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金の申請主体は、<b>複数の農業者（原則２戸以上）で構成される任意組織</b>が基本です。" +
+                "組織には規約と専用口座が必要で、交付金は市町村から組織に一括して支払われます。<br><br>" +
+                "個人申請は例外的扱いで要件が厳しいため、田中さんには鈴木さんなど近隣農業者と" +
+                "任意組織を作ることを積極的に勧めましょう。" +
+                "地域住民等が加わる形の組織でも申請可能です。"
+        }
+      }
+    ],
     nextScene: "scene2a"
   },
 
@@ -1109,8 +1176,18 @@ SCENES.forEach(s => SCENE_MAP[s.id] = s);
 
 // 現在のシーン
 let currentScene = null;
+let currentShuffledChoices = [];  // シャッフル済み選択肢
 let answered = false;
 let sceneHistory = [];  // 戻る用履歴スタック
+
+function shuffleChoices(choices) {
+  const arr = choices.map((c, i) => ({ ...c, _orig: i }));
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 // ─────────────────────────────────────────
 // UI 関数
@@ -1135,6 +1212,7 @@ function renderScene(sceneId, addToHistory = true) {
   }
 
   currentScene = scene;
+  currentShuffledChoices = shuffleChoices(scene.choices);
   answered = false;
 
   // 進捗更新
@@ -1146,8 +1224,8 @@ function renderScene(sceneId, addToHistory = true) {
     ? `<button class="back-btn" onclick="goBack()">◀ 前のシーンに戻る</button>`
     : `<span></span>`;
 
-  // HTML構築
-  const choicesHTML = scene.choices.map((c, i) => `
+  // HTML構築（シャッフル済み順で表示）
+  const choicesHTML = currentShuffledChoices.map((c, i) => `
     <button class="choice-btn" onclick="selectChoice(${i})">${String.fromCharCode(65+i)}. ${c.text}</button>
   `).join("");
 
@@ -1179,12 +1257,11 @@ function selectChoice(index) {
   if (answered) return;
   answered = true;
 
-  const scene = currentScene;
   const btns = document.querySelectorAll(".choice-btn");
 
   // 正誤の色付け・ハンドラーを「解説表示」に切り替え
   btns.forEach((btn, i) => {
-    if (scene.choices[i].correct) btn.classList.add("correct");
+    if (currentShuffledChoices[i].correct) btn.classList.add("correct");
     else if (i === index) btn.classList.add("incorrect");
     btn.onclick = () => showFeedback(i);
   });
@@ -1198,7 +1275,7 @@ function selectChoice(index) {
 }
 
 function showFeedback(index) {
-  const choice = currentScene.choices[index];
+  const choice = currentShuffledChoices[index];
   const isCorrect = choice.correct;
   const fb = document.getElementById("feedback");
   fb.className = "feedback " + (isCorrect ? "correct" : "incorrect");
