@@ -95,7 +95,7 @@
     padding: 12px 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
     border-bottom: 1px solid var(--border);
   }
   .scene-badge {
@@ -322,6 +322,19 @@
     transition: background .2s;
   }
   .start-btn:hover { background: var(--green-mid); }
+
+  /* ── 戻るボタン ── */
+  .back-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: .8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--green-dark); }
 </style>
 </head>
 <body>
@@ -503,6 +516,7 @@ SCENES.forEach(s => SCENE_MAP[s.id] = s);
 // 現在のシーン
 let currentScene = null;
 let answered = false;
+let sceneHistory = [];  // 戻る用履歴スタック
 
 // ─────────────────────────────────────────
 // UI 関数
@@ -514,18 +528,29 @@ function startSimulation() {
   renderScene("intro");
 }
 
-function renderScene(sceneId) {
+function renderScene(sceneId, addToHistory = true) {
   const scene = SCENE_MAP[sceneId];
   if (!scene) {
     renderEnd();
     return;
   }
+
+  // 現在のシーンを履歴に積む（戻る操作のときは積まない）
+  if (addToHistory && currentScene) {
+    sceneHistory.push(currentScene.id);
+  }
+
   currentScene = scene;
   answered = false;
 
   // 進捗更新
   document.getElementById("progress-fill").style.width = scene.progress + "%";
   document.getElementById("progress-step").textContent = scene.progressLabel;
+
+  // 戻るボタン（履歴がある場合のみ表示）
+  const backBtnHTML = sceneHistory.length > 0
+    ? `<button class="back-btn" onclick="goBack()">◀ 前のシーンに戻る</button>`
+    : `<span></span>`;
 
   // HTML構築
   const choicesHTML = scene.choices.map((c, i) => `
@@ -534,8 +559,11 @@ function renderScene(sceneId) {
 
   document.getElementById("scene-content").innerHTML = `
     <div class="scene-header">
-      <span class="scene-badge">${scene.badge}</span>
-      <span class="scene-title">${scene.title}</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="scene-badge">${scene.badge}</span>
+        <span class="scene-title">${scene.title}</span>
+      </div>
+      ${backBtnHTML}
     </div>
     ${scene.content}
     <div class="question-area">
@@ -545,6 +573,12 @@ function renderScene(sceneId) {
     <div class="feedback" id="feedback"></div>
     <button class="next-btn" id="next-btn" onclick="goNext()">次へ進む →</button>
   `;
+}
+
+function goBack() {
+  if (sceneHistory.length === 0) return;
+  const prevId = sceneHistory.pop();
+  renderScene(prevId, false);  // 戻る時は履歴に積まない
 }
 
 function selectChoice(index) {
