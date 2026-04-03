@@ -515,7 +515,8 @@
               <td>実施状況報告書</td><td>農家 → 市</td><td>１月末まで</td></tr>
           <tr><td>実施状況整理表等</td><td>市 → 県</td><td>２月15日まで</td></tr>
           <tr><td>実施状況とりまとめ報告書</td><td>県 → 国</td><td>２月末まで</td></tr>
-          <tr><td>実績報告書・交付請求書</td><td>農家 → 市</td><td>—</td></tr>
+          <tr><td>交付請求書（概算払）</td><td>農家 → 市</td><td>—</td></tr>
+          <tr><td>交付請求書（概算払）</td><td>市 → 県</td><td>—</td></tr>
           <tr><td rowspan="3" style="background:#fde8e8;font-weight:700;vertical-align:middle;">精算・<br>実績</td>
               <td>交付金支払い</td><td>市 → 農家</td><td>３月末まで</td></tr>
           <tr><td>実施結果（実績報告書）</td><td>市 → 県</td><td>５月15日まで</td></tr>
@@ -687,10 +688,19 @@ const SCENES = [
             <div class="flow-step">
               <div class="flow-step-num">8</div>
               <div class="flow-step-body">
-                <div class="flow-step-title">実績報告書・交付請求書</div>
+                <div class="flow-step-title">交付請求書（概算払）</div>
                 <div class="flow-step-route">農家 → 市</div>
                 <div class="flow-step-note">⏰ 市の定める期限まで</div>
-                <div class="flow-step-desc">農業者が実績報告書と交付金の請求書を市に提出する。</div>
+                <div class="flow-step-desc">農業者が交付金の交付請求書（概算払）を市に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">8-2</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付請求書（概算払）</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ 県の定める期限まで</div>
+                <div class="flow-step-desc">市が取りまとめて県に交付請求書（概算払）を提出する。</div>
               </div>
             </div>
             <div class="flow-step">
@@ -1586,6 +1596,420 @@ const SCENES = [
         }
       }
     ],
+    nextScene: "scene5"
+  },
+
+  // ── シーン５：計画認定〜交付決定（info）──────────────────
+
+  {
+    id: "scene5",
+    type: "info",
+    badge: "シーン５",
+    title: "計画認定から交付決定までの流れ",
+    progress: 46,
+    progressLabel: "認定・決定",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          申請書類の審査が終わりました。ここからは市の担当者として、
+          計画認定から交付決定までの事務処理を確認しましょう。
+        </div>
+      </div>
+      <div style="padding: 4px 20px 20px;">
+        <div class="flow-phase">
+          <div class="flow-phase-label phase-apply">あなたが行う事務処理の流れ</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">①</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画書を県へ提出</div>
+                <div class="flow-step-route">市 → 県（→ 国）</div>
+                <div class="flow-step-note">⏰ ６月末まで</div>
+                <div class="flow-step-desc">
+                  申請書類の内容確認が完了したら、市として取りまとめた計画書を県へ提出する。
+                  県はさらに国へ報告する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">②</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">割当内示の受領と農業者への計画認定通知</div>
+                <div class="flow-step-route">国・県 → 市 → 農業者</div>
+                <div class="flow-step-note">⏰ 内示受領後、速やかに</div>
+                <div class="flow-step-desc">
+                  国・県から交付金の割当内示が届いたら、市として計画を認定し、
+                  農業者あてに計画認定通知書を送付する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">③</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">農家から交付申請書を受理し、県へ提出</div>
+                <div class="flow-step-route">農家 → 市 → 県（→ 国）</div>
+                <div class="flow-step-note">⏰ 県が指定する期限まで</div>
+                <div class="flow-step-desc">
+                  認定通知を受けた農業者から交付申請書を受理する。
+                  市は市作成分の交付申請書を添えて、県の指定する期限までに県へ提出する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">④</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付決定通知の受領と農業者への通知</div>
+                <div class="flow-step-route">県（国） → 市 → 農業者</div>
+                <div class="flow-step-note">⏰ 交付決定後、速やかに</div>
+                <div class="flow-step-desc">
+                  県から交付決定通知が届いたら、農業者あてに交付決定通知書を送付する。
+                  農業者はこの通知をもって、取組を開始（または継続）する。
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:.82rem; color:var(--text-muted); margin-top:12px; padding:0 4px;">
+          ※ 上記の事務処理が完了して初めて農業者は取組を行える状態になります。
+          書類が揃ったからといって農業者が勝手に取組を始めてよいわけではありません。
+        </p>
+      </div>
+    `,
+    nextScene: "scene6a"
+  },
+
+  // ── シーン６：現地確認 ──────────────────
+
+  {
+    id: "scene6a",
+    badge: "シーン６",
+    title: "現地確認（１）　確認の実施判断",
+    progress: 55,
+    progressLabel: "現地確認",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          交付決定通知を送付してしばらくすると、農業者たちは取組を開始しました。
+          ８月下旬、上司から声がかかりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「田中さんたちの取組、ちゃんと実施されているか現地確認に行かないといけないね。
+          申請書通りに取り組んでいるか確認してほしいんだけど、
+          具体的には何を確認しにいけばいい？」
+        </div>
+      </div>
+    `,
+    question: "現地確認で確認すべき事項として最も適切なものはどれですか？",
+    choices: [
+      {
+        text: "申請書（様式第３号）に記載されたほ場で、申請通りの取組（カバークロップの作付け等）が実施されているかを確認する。あわせて環境負荷低減チェックシートの取組内容も現地で確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "現地確認の主な目的は、<b>申請内容と実際の取組が一致しているかの確認</b>です。<br><br>" +
+                "具体的には以下を確認します。<br>" +
+                "・申請したほ場でカバークロップ等が実際に作付けされているか<br>" +
+                "・申請面積と実際の面積に大きな差異がないか<br>" +
+                "・環境負荷低減チェックシートに記載した取組（農薬・化学肥料の削減等）が実際に行われているか<br><br>" +
+                "不正や虚偽申請の抑止にもなるため、定期的な現地確認は重要な業務です。"
+        }
+      },
+      {
+        text: "農業者の農地の登記情報と実際の地番が一致しているかを法務局の資料と照合する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "現地確認の目的は登記情報の照合ではありません。<br>" +
+                "本交付金の現地確認では、<b>申請した取組が実際に行われているかどうか</b>を確認することが目的です。<br>" +
+                "カバークロップが申請ほ場で作付けされているか、農薬削減の取組が実施されているかなどを現地で直接確認しましょう。"
+        }
+      },
+      {
+        text: "農業者に農業日誌を見せてもらい、作業記録を書面で確認するだけでよい",
+        correct: false,
+        feedback: {
+          title: "不十分です",
+          body: "書面確認だけでは不十分です。<b>実際に現地（ほ場）に赴いて</b>、取組が行われているかを目視で確認することが求められます。<br>" +
+                "農業日誌等の記録の確認も補助的に行いますが、それだけでは現地確認とは言えません。<br>" +
+                "書面と現地の両方で確認することで、申請内容の適正を確保します。"
+        }
+      }
+    ],
+    nextScene: "scene6b"
+  },
+
+  {
+    id: "scene6b",
+    badge: "シーン６",
+    title: "現地確認（２）　取組に問題があった場合",
+    progress: 60,
+    progressLabel: "現地確認",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          現地確認に行ったところ、田中さんのほ場の一部でカバークロップが
+          作付けされていないことがわかりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「あの区画は今年、排水の工事が入っちゃって
+          カバークロップを播けなかったんですよ。
+          ほかのほ場はちゃんとやっています。申請のまま大丈夫ですよね？」
+        </div>
+      </div>
+    `,
+    question: "取組が実施できなかったほ場がある場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「申請面積と実績面積が異なる場合は、実際に取り組んだ面積で交付金を算出し直す必要があります。実績報告書には実際の取組面積を正確に記載してください」と説明する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金は<b>実際に取り組んだ面積</b>に基づいて交付されます。<br>" +
+                "申請面積より実績面積が少ない場合は、実績面積で交付金を再計算します。<br><br>" +
+                "田中さんには以下を説明しましょう。<br>" +
+                "・実施できなかったほ場の面積は実績報告書に含めないこと<br>" +
+                "・交付金は実際の取組面積で計算し直すこと<br>" +
+                "・やむを得ない事情があっても、実施していない面積への交付は認められないこと"
+        }
+      },
+      {
+        text: "「やむを得ない事情があれば、取り組めなかったほ場も申請通りの面積で処理して問題ありません」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "やむを得ない事情があっても、<b>実際に取り組んでいない面積への交付金は認められません</b>。<br>" +
+                "交付金は実績（実際の取組面積）に基づいて算定されます。<br>" +
+                "申請面積のまま処理すると、不正受給となる可能性があります。<br>" +
+                "田中さんには実績報告書に実際の取組面積を正確に記載するよう指導してください。"
+        }
+      },
+      {
+        text: "取組ができなかった事情を考慮し、市の判断で今年度分の申請を全件取り消す",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "取り組めなかった<b>ほ場分だけ</b>を除外すればよく、他のほ場での適正な取組まで全件取り消す必要はありません。<br>" +
+                "田中さんは他のほ場ではカバークロップを適切に実施しています。<br>" +
+                "実施できたほ場の面積分については、正常に交付金の対象となります。"
+        }
+      }
+    ],
+    nextScene: "scene7a"
+  },
+
+  // ── シーン７：実施報告〜概算払い ──────────────────
+
+  {
+    id: "scene7a",
+    badge: "シーン７",
+    title: "実施状況報告と整理表の提出",
+    progress: 70,
+    progressLabel: "実施報告",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          取組期間が終わり、年が明けて１月になりました。
+          農業者から実施状況報告書が提出される時期です。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「実施状況報告書を持ってきました。
+          カバークロップは工事のあった区画を除いて、予定通り全部できました。
+          あと、様式に写真を貼る欄がありましたが、
+          写真撮り忘れちゃって…これは大丈夫ですか？」
+        </div>
+      </div>
+    `,
+    question: "取組の写真がない場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「写真は取組を証明する重要な書類です。撮影していない場合は今からでも現地の状況を確認させていただく必要があります。現地確認の日程を調整しましょう」と伝える",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "取組の写真や記録は、<b>取組が適切に実施されたことを証明する重要な書類</b>です。<br>" +
+                "写真がない場合、市として取組の実施を確認できないため、現地確認や代替証明の手配が必要です。<br><br>" +
+                "田中さんには今後のために、取組の各段階で写真を撮影しておくよう指導しましょう。<br>" +
+                "また、確認後は速やかに実施状況整理表を作成して、２月15日までに県へ提出します。"
+        }
+      },
+      {
+        text: "「写真はなくても問題ありません。報告書の記載内容だけで処理します」と受け付ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "写真等の証拠書類は取組実施の証明として重要です。<br>" +
+                "記載内容だけでは取組が実際に行われたかを確認できません。<br>" +
+                "市として適正な交付金の執行を確保するためにも、<b>写真の提出または現地確認</b>によって取組の実施を確認する必要があります。"
+        }
+      },
+      {
+        text: "「写真がないため、今年度の交付金はすべて不支給とします」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "写真がないことだけで即座に不支給とするのは対応として過剰です。<br>" +
+                "まず現地確認や別の証明方法（農業日誌、資材の購入記録等）で取組の実施を確認する機会を設けましょう。<br>" +
+                "現地確認等で取組の実施が確認できれば、交付金の支給は可能です。"
+        }
+      }
+    ],
+    nextScene: "scene7b"
+  },
+
+  {
+    id: "scene7b",
+    badge: "シーン７",
+    title: "交付請求書（概算払）の処理",
+    progress: 78,
+    progressLabel: "概算払い",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          現地確認も完了し、実施状況整理表を２月15日までに県へ提出しました。
+          続いて、交付金の支払いに向けた手続きです。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「交付請求書を持ってきました。
+          ところで、交付金って実際にいつ振り込まれますか？
+          会のメンバーに聞かれているんですが…」
+        </div>
+      </div>
+    `,
+    question: "交付金の支払い時期と流れについて、正しく案内できますか？",
+    choices: [
+      {
+        text: "「農業者団体の口座への振り込みは３月末までに行います。その後、団体内の各農業者への支払いも３月末までに完了してもらう必要があります」と説明する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金の支払いフローは以下の通りです。<br><br>" +
+                "①農業者が交付請求書（概算払）を市へ提出<br>" +
+                "②市が交付請求書（概算払）を県へ提出<br>" +
+                "③県・国から市へ交付金が送金される<br>" +
+                "④市から<b>農業者団体の口座</b>へ振り込み（３月末まで）<br>" +
+                "⑤農業者団体から<b>団体内の各農業者</b>へ支払い（３月末まで）<br><br>" +
+                "交付金は農業者個人の口座ではなく、<b>団体名義の口座</b>に入金されます。" +
+                "その後、団体が各農業者に配分することを田中さんに説明しましょう。"
+        }
+      },
+      {
+        text: "「交付請求書を受理してから１週間以内に田中さん個人の口座へ振り込まれます」と伝える",
+        correct: false,
+        feedback: {
+          title: "２点が誤りです",
+          body: "①振込先は田中さん個人の口座ではなく<b>「たんぼの会」の団体名義口座</b>です。<br>" +
+                "②「１週間以内」という期限はありません。市から農業者団体への振り込みは<b>３月末まで</b>が期限です。<br><br>" +
+                "個人口座への振り込みは制度上認められていません。団体口座へ入金後、団体が各農業者へ配分します。"
+        }
+      },
+      {
+        text: "「交付請求書は来年度（４月以降）に処理するので、振り込みは４月になります」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金の農業者団体への支払いは<b>３月末まで</b>に行うことが求められています。<br>" +
+                "４月以降になると期限超過となります。<br>" +
+                "交付請求書を受理したら速やかに処理し、３月末までに振り込みを完了させましょう。"
+        }
+      }
+    ],
+    nextScene: "scene8a"
+  },
+
+  // ── シーン８：支払証明の受理〜実績報告 ──────────────────
+
+  {
+    id: "scene8a",
+    badge: "シーン８",
+    title: "支払証明の受理と実績報告書の提出",
+    progress: 88,
+    progressLabel: "精算・実績",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ３月末に農業者団体への交付金振り込みが完了しました。
+          ４月になり、田中さんから書類が届きました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「団体から会員への支払いが終わりました。
+          書類を持ってきたんですが、通帳のコピーと
+          会員全員の領収書でよかったでしょうか？
+          あと、実績報告書も一緒に持ってきました。」
+        </div>
+      </div>
+    `,
+    question: "田中さんが持参した書類の確認と、この後の市の事務処理として正しいものはどれですか？",
+    choices: [
+      {
+        text: "通帳のコピーや会員の領収書で団体内の支払い完了を確認し、実績報告書を受理する。その後、５月15日までに実績報告書を県へ提出する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "この場面での事務処理は以下の通りです。<br><br>" +
+                "【４月：支払証明の受理】<br>" +
+                "・農業者団体から団体内農業者への支払いが完了したことを、<b>通帳の写しや領収書</b>等で確認する<br>" +
+                "・実績報告書を受理し、内容を確認する<br><br>" +
+                "【５月15日まで：市 → 県】<br>" +
+                "・実施結果（実績報告書）を県へ提出する<br><br>" +
+                "その後、県が５月末までに国へとりまとめ報告を行い、事業年度の事務が完了します。"
+        }
+      },
+      {
+        text: "支払証明書類は不要。実績報告書だけ受理して、すぐに県へ送付する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金が<b>団体内の農業者全員へ適切に配分されたか</b>を確認することは市の重要な役割です。<br>" +
+                "通帳の写しや領収書などの支払証明書類を受理して、配分が完了していることを確認してから実績報告書を処理しましょう。<br>" +
+                "支払いの確認なしに実績報告書だけ処理すると、交付金の適正な執行を確認したことにはなりません。"
+        }
+      },
+      {
+        text: "実績報告書の県への提出期限は１２月末なので、急がなくてよい",
+        correct: false,
+        feedback: {
+          title: "期限が誤りです",
+          body: "実施結果（実績報告書）の市から県への提出期限は<b>５月15日まで</b>です。<br>" +
+                "12月末という期限はありません。４月に書類を受理したら速やかに内容を確認し、<br>" +
+                "５月15日までに県へ提出できるよう準備を進めてください。"
+        }
+      }
+    ],
     nextScene: null
   }
 ];
@@ -1741,11 +2165,16 @@ function renderEnd() {
       <p style="color:var(--text-muted); line-height:1.8;">
         全シーンを完了しました。お疲れさまでした。<br><br>
         <strong>学習した内容：</strong><br>
+        事務フロー：年間11ステップの事務の流れ<br>
         シーン１：窓口相談・申請要件の確認・組織要件の案内<br>
         シーン２：書類受付・不備チェック・期限対応<br>
         シーン３：取組区分の確認・交付金額の計算<br>
-        シーン４：重複申請の判断・任意組織の要件・予算減額の説明<br><br>
-        実務で迷ったときは右下の参考資料パネルをご活用ください。
+        シーン４：重複申請の判断・任意組織の要件・予算減額の説明<br>
+        シーン５：計画書提出から交付決定までの流れ<br>
+        シーン６：現地確認の実施・取組に問題があった場合の対応<br>
+        シーン７：実施状況報告・写真等の証拠確認・概算払いの流れ<br>
+        シーン８：支払証明の受理・実績報告書の県への提出<br><br>
+        実務で迷ったときは下部の参考資料パネルをご活用ください。
       </p>
     </div>
   `;
