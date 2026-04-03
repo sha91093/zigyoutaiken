@@ -898,7 +898,208 @@ const SCENES = [
         }
       }
     ],
-    nextScene: "scene3"
+    nextScene: "scene3a"
+  },
+
+  // ── シーン３：取組区分と交付金計算 ──────────────────
+
+  {
+    id: "scene3a",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（１）　単価の確認",
+    progress: 83,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんの補正済み書類が提出されました。
+          内容を審査する前に、交付単価が正しく適用されているか確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号を確認すると…<br>
+          　取組区分：カバークロップ（緑肥の施用）<br>
+          　作付け作物：オオムギ　　主作物：水稲<br>
+          　取組面積：50a<br>
+          　申請者が記入した交付単価：8,000円／10a<br>
+          　…この単価は合っているか？）
+        </div>
+      </div>
+    `,
+    question: "カバークロップ（緑肥の施用）の交付単価として正しいものはどれですか？",
+    choices: [
+      {
+        text: "8,000円／10a（作付け作物がオオムギの場合）→ 申請内容は正しい",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "カバークロップ（緑肥の施用）の交付単価は <b>8,000円／10a</b> です（全国共通取組）。<br>" +
+                "ただし、作付けする緑肥の種類によって単価が変わる場合があります。<br>" +
+                "ヒエを使用する場合は <b>7,000円／10a</b> となります。<br>" +
+                "田中さんはオオムギを使用予定のため、8,000円の適用は正しい判断です。"
+        }
+      },
+      {
+        text: "4,400円／10a → 申請内容の単価が誤っているため修正を求める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "4,400円／10a は <b>堆肥の施用</b> の交付単価です。カバークロップとは別の取組区分になります。<br>" +
+                "取組区分ごとの単価を混同しないよう、参考資料の単価表で必ず確認しましょう。<br>" +
+                "カバークロップの正しい単価は 8,000円／10a（ヒエの場合は 7,000円）です。"
+        }
+      },
+      {
+        text: "14,000円／10a → 申請内容の単価が低すぎるため修正を求める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "14,000円／10a は <b>有機農業</b>（化学肥料・農薬を一切使用しない）の交付単価です。<br>" +
+                "田中さんが申請しているのはカバークロップ（緑肥の施用）であり、" +
+                "有機農業とは異なる取組区分です。<br>" +
+                "正しい単価は 8,000円／10a です。申請内容に誤りはありません。"
+        }
+      }
+    ],
+    nextScene: "scene3b"
+  },
+
+  {
+    id: "scene3b",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（２）　金額の算出",
+    progress: 88,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          単価の確認ができました。次に交付金額の計算を確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号の計算欄を確認する。<br>
+          　取組面積：50a　単価：8,000円／10a<br>
+          　田中さんが記入した交付金額：400,000円<br>
+          　…この金額は正しいか？）
+        </div>
+      </div>
+    `,
+    question: "田中さんの交付金額（50a、カバークロップ、8,000円／10a）を正しく計算するとどうなりますか？",
+    choices: [
+      {
+        text: "40,000円　（計算式：50a ÷ 10 × 8,000円 = 40,000円）→ 田中さんの記入に誤りがある",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付単価の単位は <b>円／10a（10アール）</b> です。<br>" +
+                "計算式：取組面積（a）÷ 10 × 交付単価（円／10a）<br>" +
+                "　　　　= 50a ÷ 10 × 8,000円 = <b>40,000円</b><br><br>" +
+                "田中さんは「50a × 8,000円」と計算して 400,000円 と記入しており、" +
+                "単位（10a）を無視した計算になっています。<br>" +
+                "補正してもらうよう連絡しましょう。"
+        }
+      },
+      {
+        text: "400,000円　（計算式：50a × 8,000円 = 400,000円）→ 田中さんの記入は正しい",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付単価の単位は <b>円／10a（1アールではなく10アール）</b> です。<br>" +
+                "「50a × 8,000円」は単位を無視した誤った計算です。<br>" +
+                "正しくは「50a ÷ 10 × 8,000円 = 40,000円」となります。<br>" +
+                "単位の見落としは計算ミスの典型例です。審査時は必ず確認しましょう。"
+        }
+      },
+      {
+        text: "4,000円　（計算式：50a × 8,000円 ÷ 100 = 4,000円）→ 田中さんの記入に誤りがある",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "100 で割る根拠がありません。<br>" +
+                "正しい計算式は「取組面積（a）÷ 10 × 交付単価（円／10a）」です。<br>" +
+                "　50a ÷ 10 × 8,000円 = <b>40,000円</b><br>" +
+                "1アール（a）と 10アール（10a）の関係を整理しておきましょう。"
+        }
+      }
+    ],
+    nextScene: "scene3c"
+  },
+
+  {
+    id: "scene3c",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（３）　複数取組・加算の適用",
+    progress: 93,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんの計算ミスを補正してもらっている間に、別の農業者・佐藤さんが窓口に来ました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👩‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">佐藤さん（農業者）</span>
+            <span class="character-role">野菜農家・今年度から有機農業を開始</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「今年から有機農業を始めます！農地は 20a です。
+          知り合いから『新しく有機農業を始める人には上乗せがある』と聞いたんですが、
+          私は対象になりますか？交付金はいくらになりますか？」
+        </div>
+      </div>
+    `,
+    question: "佐藤さんが今年度から有機農業を新規開始する場合（20a）、交付金の合計額はいくらですか？",
+    choices: [
+      {
+        text: "36,000円　（有機農業：20a÷10×14,000円＝28,000円　＋　取組拡大加算：20a÷10×4,000円＝8,000円）",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "有機農業を新規に開始する農業者を受け入れ・定着させる「<b>取組拡大加算</b>」が適用されます。<br>" +
+                "・有機農業（基本）：20a ÷ 10 × 14,000円 ＝ <b>28,000円</b><br>" +
+                "・取組拡大加算　　：20a ÷ 10 × 4,000円  ＝ <b>8,000円</b>（新規取組面積に対して）<br>" +
+                "　　　　　　合計 ＝ <b>36,000円</b><br><br>" +
+                "佐藤さんは今年度が初めての有機農業なので、取組拡大加算の対象になります。"
+        }
+      },
+      {
+        text: "28,000円　（有機農業のみ：20a÷10×14,000円＝28,000円）取組拡大加算は対象外",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "今年度から有機農業を<b>新規に開始</b>する農業者は「<b>取組拡大加算</b>」の対象です。<br>" +
+                "取組拡大加算（4,000円／10a）は新規取組面積に対して加算されるため、" +
+                "佐藤さんの場合は有機農業の基本額 28,000円 に加えて 8,000円 が上乗せされ、合計 36,000円 になります。<br>" +
+                "加算の存在を見落とさないよう、単価表をしっかり確認しましょう。"
+        }
+      },
+      {
+        text: "32,000円　（有機農業＋炭素貯留加算：20a÷10×(14,000＋2,000)円＝32,000円）",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "炭素貯留効果の高い有機農業の加算（2,000円／10a）は、" +
+                "堆肥の施用・緑肥の施用・炭の投入のいずれか1つ以上を <b>併せて行う場合</b> に適用されます。<br>" +
+                "佐藤さんの申請内容では炭素貯留の取組については言及がないため、この加算は適用できません。<br>" +
+                "佐藤さんに適用されるのは <b>取組拡大加算（4,000円／10a）</b> です。合計は 36,000円 になります。"
+        }
+      }
+    ],
+    nextScene: "scene4"
   }
 ];
 
@@ -1024,10 +1225,10 @@ function renderEnd() {
   document.getElementById("scene-content").innerHTML = `
     <div style="text-align:center; padding: 48px 24px;">
       <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
-      <h2 style="color:var(--green-dark); margin-bottom:12px;">シーン２ クリア！</h2>
+      <h2 style="color:var(--green-dark); margin-bottom:12px;">シーン３ クリア！</h2>
       <p style="color:var(--text-muted); line-height:1.8;">
-        書類受付・不備チェックの対応を学びました。<br>
-        次のシーン３では <strong>取組区分の確認・交付金計算</strong> を体験します。
+        取組区分と交付金計算を学びました。<br>
+        次のシーン４では <strong>審査中の判断事例</strong>（重複申請など）を体験します。
       </p>
     </div>
   `;
