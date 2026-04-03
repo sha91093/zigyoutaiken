@@ -400,6 +400,55 @@
     transition: border-color .2s, color .2s;
   }
   .back-btn:hover { border-color: var(--accent); color: var(--green-dark); }
+
+  /* ── チャプター選択メニュー ── */
+  .chapter-menu {
+    margin-top: 24px;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .chapter-menu-title {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .chapter-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: .85rem;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .2s, background .2s;
+  }
+  .chapter-btn:hover { border-color: var(--accent); background: var(--green-pale); }
+  .chapter-btn .ch-badge {
+    font-size: .7rem;
+    font-weight: 700;
+    background: var(--green-light);
+    color: var(--green-dark);
+    padding: 2px 7px;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .chapter-btn .ch-badge.info-badge {
+    background: #fff3cd;
+    color: #856404;
+  }
 </style>
 </head>
 <body>
@@ -439,7 +488,40 @@
         このシミュレーションでは、窓口相談・申請受付・審査・交付決定まで、<br>
         実際の業務の流れを体験しながら学びます。
       </p>
-      <button class="start-btn" onclick="startSimulation()">研修を開始する</button>
+      <button class="start-btn" onclick="startSimulation()">最初から始める</button>
+
+      <div class="chapter-menu">
+        <div class="chapter-menu-title">— または特定のシーンから始める —</div>
+        <div class="chapter-list">
+          <button class="chapter-btn" onclick="jumpTo('flow_overview')">
+            <span class="ch-badge info-badge">事務フロー</span>年間事務の流れを確認する
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene1a')">
+            <span class="ch-badge">シーン１</span>農業者が窓口相談に来る
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene2a')">
+            <span class="ch-badge">シーン２</span>書類受付・不備チェック
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene3a')">
+            <span class="ch-badge">シーン３</span>取組区分と交付金計算
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene4a')">
+            <span class="ch-badge">シーン４</span>審査中の判断事例
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene5')">
+            <span class="ch-badge info-badge">シーン５</span>計画認定から交付決定までの流れ
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene6a')">
+            <span class="ch-badge">シーン６</span>現地確認
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene7a')">
+            <span class="ch-badge">シーン７</span>実施状況報告・概算払い
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene8a')">
+            <span class="ch-badge">シーン８</span>支払証明の受理・実績報告書の提出
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- シーンコンテンツ（JS で差し替え） -->
@@ -2176,8 +2258,38 @@ function renderEnd() {
         シーン８：支払証明の受理・実績報告書の県への提出<br><br>
         実務で迷ったときは下部の参考資料パネルをご活用ください。
       </p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:24px; flex-wrap:wrap;">
+        <button class="start-btn" onclick="goHome()" style="padding:10px 28px; font-size:.9rem;">
+          🏠 ホームに戻る
+        </button>
+        <button class="start-btn" onclick="startSimulation()" style="padding:10px 28px; font-size:.9rem; background:var(--green-mid);">
+          🔄 最初からやり直す
+        </button>
+      </div>
     </div>
   `;
+}
+
+function goHome() {
+  currentScene = null;
+  currentShuffledChoices = [];
+  answered = false;
+  sceneHistory = [];
+  document.getElementById("progress-fill").style.width = "0%";
+  document.getElementById("progress-step").textContent = "導入";
+  document.getElementById("start-screen").style.display = "block";
+  document.getElementById("scene-content").style.display = "none";
+  document.getElementById("scene-content").innerHTML = "";
+}
+
+function jumpTo(sceneId) {
+  currentScene = null;
+  currentShuffledChoices = [];
+  answered = false;
+  sceneHistory = [];
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("scene-content").style.display = "block";
+  renderScene(sceneId);
 }
 
 function toggleRef(btn) {
