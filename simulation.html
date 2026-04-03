@@ -513,7 +513,194 @@ const SCENES = [
         }
       }
     ],
-    nextScene: "scene1"
+    nextScene: "scene1a"
+  },
+
+  // ── Phase 2：農業者が窓口相談に来る ──────────────────
+
+  {
+    id: "scene1a",
+    badge: "シーン１",
+    title: "窓口相談（１）　最初の確認",
+    progress: 25,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ５月中旬。田中太郎さん（60代・水稲農家）が市役所の窓口を訪れました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「環境にやさしい農業をしたら補助金がもらえると聞いたんですが…。
+          カバークロップっていう緑肥を試してみたいんです。申請できますか？」
+        </div>
+      </div>
+    `,
+    question: "まず何を確認しますか？",
+    choices: [
+      {
+        text: "「主作物（コメ）は販売を目的に生産されていますか？」と確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金の対象要件の第一は「主作物を販売目的で生産していること」です。" +
+                "自家消費のみの場合は対象外となります。" +
+                "田中さんのケースでは農協への出荷が想定されますが、まずこの基本要件を口頭で確認するのが適切な順序です。"
+        }
+      },
+      {
+        text: "「どんなカバークロップを考えていますか？」と取組の詳細から聞く",
+        correct: false,
+        feedback: {
+          title: "惜しい！",
+          body: "取組内容の確認も大切ですが、順序として申請要件（販売目的・化学資材低減）を先に確認するのが適切です。" +
+                "要件を満たさない場合、取組の詳細を詰めても申請できないためです。" +
+                "まず要件確認 → 次に取組詳細の流れで進めましょう。"
+        }
+      },
+      {
+        text: "「農業者コードと農地の地番を教えてください」と書類確認から入る",
+        correct: false,
+        feedback: {
+          title: "早すぎます",
+          body: "書類確認・受付手続きは、申請要件を満たすことが確認されてからの話です。" +
+                "要件確認より先に書類手続きを進めると、後から「対象外でした」となった場合に農業者に無駄な手間をかけさせてしまいます。" +
+                "まずは要件確認から始めましょう。"
+        }
+      }
+    ],
+    nextScene: "scene1b"
+  },
+
+  {
+    id: "scene1b",
+    badge: "シーン１",
+    title: "窓口相談（２）　化学資材の低減確認",
+    progress: 40,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんは「コメは農協に全量出荷しています」と答えました。<br>
+          販売目的の要件はクリアです。次の要件を確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「農薬はなるべく減らしているつもりです。化学肥料も少なめにしています。
+          でも正確に何割減らしたかは、ちゃんと計算したことがないですね…」
+        </div>
+      </div>
+    `,
+    question: "化学資材の低減について、どのように確認・案内しますか？",
+    choices: [
+      {
+        text: "「都道府県が定める慣行使用量と比較して、化学肥料・農薬ともに原則５割以上低減が必要です。一緒に使用量を整理してみましょう」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金のカバークロップ（緑肥の施用）取組には、" +
+                "「化学肥料・化学合成農薬を都道府県の慣行レベルより原則５割以上低減すること」が必須要件です。" +
+                "農業者が自己判断できない場合は、都道府県が公表する慣行使用量と実際の使用量を一緒に確認するのが丁寧な対応です。"
+        }
+      },
+      {
+        text: "「農薬を減らしているなら問題ないと思います。申請書を渡しますね」と受付を進める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "「なるべく減らしている」だけでは要件を満たすか判断できません。" +
+                "都道府県の慣行使用量との比較で「原則５割以上低減」していることが必要です。" +
+                "要件確認が不十分なまま申請書を渡すと、後から不適切な申請として問題になる可能性があります。"
+        }
+      },
+      {
+        text: "「化学肥料も農薬も一切使わない有機農業に切り替えれば申請できます」と案内する",
+        correct: false,
+        feedback: {
+          title: "情報が不正確です",
+          body: "有機農業への転換も選択肢の一つですが、カバークロップ取組の要件は「５割以上低減」であって「使用ゼロ」ではありません。" +
+                "有機農業は別の取組区分（単価14,000円/10a）です。田中さんが希望するカバークロップの要件は" +
+                "「５割以上低減＋緑肥の作付け」ですので、案内の内容が取組区分と合っていません。"
+        }
+      }
+    ],
+    nextScene: "scene1c"
+  },
+
+  {
+    id: "scene1c",
+    badge: "シーン１",
+    title: "窓口相談（３）　水稲の追加要件",
+    progress: 55,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          使用量を一緒に整理したところ、田中さんは５割以上低減の要件を満たしていることがわかりました。<br>
+          取組の詳細を詰めていきます。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「では申請できそうですね！カバークロップは 50a（田んぼ全部）でやります。
+          春にオオムギをまいて、田植え前にすき込む予定です。
+          他に何か条件はありますか？」
+        </div>
+      </div>
+    `,
+    question: "水稲でカバークロップに取り組む場合、令和７年度から追加が必要な対策を正しく案内できますか？",
+    choices: [
+      {
+        text: "「水稲での取組は、メタン排出削減対策として①長期中干し（14日以上）②前年度の湛水不実施 ③前年度の秋耕のいずれか１つ以上を併せて行う必要があります」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "令和７年度から、水稲で緑肥の施用・堆肥の施用・総合防除を行う場合は、" +
+                "水田からのメタン排出削減対策が必須となりました。" +
+                "①長期中干し（14日以上）、②前年度の湛水不実施、③前年度の秋耕（湛水４ヶ月以上前に耕うん）" +
+                "の３つのうち少なくとも１つを実施する必要があります。" +
+                "田中さんには事前に対応可能か確認しておきましょう。"
+        }
+      },
+      {
+        text: "「水稲の場合でも特に追加要件はありません。取組面積（50a）を申請書に記載してください」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "令和７年度から水稲でカバークロップ等に取り組む場合は、" +
+                "メタン排出削減対策（長期中干し・前年度湛水不実施・前年度秋耕のいずれか）が新たに必須となりました。" +
+                "この要件を案内しないと、取組実施後に要件不備で交付金が受けられなくなる可能性があります。"
+        }
+      },
+      {
+        text: "「水稲の場合は土壌診断書の提出が必要です」と案内する",
+        correct: false,
+        feedback: {
+          title: "取組区分が違います",
+          body: "土壌診断が必要なのは「堆肥の施用」や「炭素貯留効果の高い有機農業（加算）」です。" +
+                "カバークロップ（緑肥の施用）に土壌診断の要件はありません。" +
+                "取組区分ごとの要件を混同しないよう、参考資料で確認する習慣をつけましょう。"
+        }
+      }
+    ],
+    nextScene: "scene2"
   }
 ];
 
@@ -639,10 +826,10 @@ function renderEnd() {
   document.getElementById("scene-content").innerHTML = `
     <div style="text-align:center; padding: 48px 24px;">
       <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
-      <h2 style="color:var(--green-dark); margin-bottom:12px;">導入シーン完了！</h2>
+      <h2 style="color:var(--green-dark); margin-bottom:12px;">シーン１ クリア！</h2>
       <p style="color:var(--text-muted); line-height:1.8;">
-        Phase 1 はここまでです。<br>
-        次の Phase 2 では窓口相談・書類受付・審査判断のシナリオが追加されます。
+        窓口相談の対応を学びました。<br>
+        次のシーン２では <strong>書類受付・不備チェック</strong> を体験します。
       </p>
     </div>
   `;
