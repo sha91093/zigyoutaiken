@@ -302,6 +302,63 @@
     color: var(--green-dark);
   }
 
+  /* ── 事務フロー ── */
+  .flow-phase { margin-bottom: 4px; }
+  .flow-phase-label {
+    font-size: .8rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px 6px 0 0;
+    display: inline-block;
+  }
+  .phase-apply  { background: #d8f3dc; color: #2d6a4f; }
+  .phase-report { background: #fff3cd; color: #856404; }
+  .phase-result { background: #fde8e8; color: #842029; }
+  .flow-steps {
+    border: 1px solid var(--border);
+    border-radius: 0 8px 8px 8px;
+    overflow: hidden;
+  }
+  .flow-step {
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-step-num {
+    width: 24px;
+    height: 24px;
+    background: var(--green-mid);
+    color: #fff;
+    border-radius: 50%;
+    font-size: .75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .flow-step-title { font-size: .88rem; font-weight: 700; color: var(--text); }
+  .flow-step-route {
+    font-size: .82rem;
+    color: var(--green-dark);
+    font-weight: 700;
+    margin: 2px 0;
+  }
+  .flow-step-note {
+    font-size: .78rem;
+    color: #856404;
+    background: #fff8e1;
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  .flow-step-desc { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
+
   /* ── スタート画面 ── */
   #start-screen {
     text-align: center;
@@ -442,6 +499,29 @@
 
       <h4>重複申請の禁止</h4>
       <p>中山間地域等直接支払の集落協定において選択されている活動と同一の活動は、本交付金での申請不可。</p>
+
+      <h4>年間事務フロー</h4>
+      <table class="ref-table">
+        <thead>
+          <tr><th>フェーズ</th><th>内容</th><th>方向</th><th>期限目安</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="4" style="background:#e8f5ee;font-weight:700;vertical-align:middle;">申請・<br>認定</td>
+              <td>計画書提出</td><td>農家 → 市 → 県 → 国</td><td>６月末まで</td></tr>
+          <tr><td>計画認定・交付金割当内示</td><td>国 → 県 → 市 → 農家</td><td>—</td></tr>
+          <tr><td>交付申請</td><td>農家 → 市 → 県 → 国</td><td>—</td></tr>
+          <tr><td>交付決定</td><td>国 → 県 → 市 → 農家</td><td>—</td></tr>
+          <tr><td rowspan="4" style="background:#fff3cd;font-weight:700;vertical-align:middle;">報告・<br>支払</td>
+              <td>実施状況報告書</td><td>農家 → 市</td><td>１月末まで</td></tr>
+          <tr><td>実施状況整理表等</td><td>市 → 県</td><td>２月15日まで</td></tr>
+          <tr><td>実施状況とりまとめ報告書</td><td>県 → 国</td><td>２月末まで</td></tr>
+          <tr><td>実績報告書・交付請求書</td><td>農家 → 市</td><td>—</td></tr>
+          <tr><td rowspan="3" style="background:#fde8e8;font-weight:700;vertical-align:middle;">精算・<br>実績</td>
+              <td>交付金支払い</td><td>市 → 農家</td><td>３月末まで</td></tr>
+          <tr><td>実施結果（実績報告書）</td><td>市 → 県</td><td>５月15日まで</td></tr>
+          <tr><td>実施結果（とりまとめ報告）</td><td>県 → 国</td><td>５月末まで</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -513,6 +593,144 @@ const SCENES = [
         }
       }
     ],
+    nextScene: "flow_overview"
+  },
+
+  {
+    id: "flow_overview",
+    type: "info",
+    badge: "事務フロー",
+    title: "年間事務の流れを確認しよう",
+    progress: 12,
+    progressLabel: "事務フロー",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          実務を始める前に、１年間の事務の流れを確認しておきましょう。
+          市の担当者は農業者・県・国との間でどのタイミングに何をするかを把握しておくことが重要です。
+        </div>
+      </div>
+      <div style="padding: 4px 20px 20px;">
+
+        <div class="flow-phase">
+          <div class="flow-phase-label phase-apply">申請・認定フェーズ</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画書の提出</div>
+                <div class="flow-step-route">農家 → 市 → 県 → 国</div>
+                <div class="flow-step-note">⏰ ６月末まで（取組開始前）</div>
+                <div class="flow-step-desc">農業者が様式第１〜３号・チェックシートを市に提出。市は取りまとめて県経由で国に報告。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画認定・交付金割当内示</div>
+                <div class="flow-step-route">国 → 県 → 市 → 農家</div>
+                <div class="flow-step-note">⏰ 計画書提出後</div>
+                <div class="flow-step-desc">国・県が交付金の割当内示を行い、市が計画を認定して農業者に通知する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付申請</div>
+                <div class="flow-step-route">農家 → 市 → 県 → 国</div>
+                <div class="flow-step-note">⏰ 計画認定後</div>
+                <div class="flow-step-desc">認定を受けた農業者が交付金の交付申請書を市に提出。市が審査し県・国へ。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付決定</div>
+                <div class="flow-step-route">国 → 県 → 市 → 農家</div>
+                <div class="flow-step-note">⏰ 交付申請後</div>
+                <div class="flow-step-desc">国が交付決定し、県・市を通じて農業者に通知される。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-phase" style="margin-top:16px;">
+          <div class="flow-phase-label phase-report">報告・支払フェーズ（翌年１〜３月）</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況報告書</div>
+                <div class="flow-step-route">農家 → 市</div>
+                <div class="flow-step-note">⏰ １月末まで</div>
+                <div class="flow-step-desc">農業者が取組の実施状況（実施面積・取組内容等）を市に報告する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">6</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況整理表等</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ ２月15日まで</div>
+                <div class="flow-step-desc">市が農業者からの報告をとりまとめて県に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">7</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況とりまとめ報告書</div>
+                <div class="flow-step-route">県 → 国</div>
+                <div class="flow-step-note">⏰ ２月末まで</div>
+                <div class="flow-step-desc">県が市の報告をとりまとめて国に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">8</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実績報告書・交付請求書</div>
+                <div class="flow-step-route">農家 → 市</div>
+                <div class="flow-step-note">⏰ 市の定める期限まで</div>
+                <div class="flow-step-desc">農業者が実績報告書と交付金の請求書を市に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">9</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付金支払い</div>
+                <div class="flow-step-route">市 → 農家（組織口座）</div>
+                <div class="flow-step-note">⏰ ３月末まで</div>
+                <div class="flow-step-desc">市が農業者の組織名義口座に交付金を振り込む。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-phase" style="margin-top:16px;">
+          <div class="flow-phase-label phase-result">精算・実績フェーズ（翌年度５月まで）</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">10</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施結果（実績報告書）</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ ５月15日まで</div>
+                <div class="flow-step-desc">市が実施結果の実績報告書を県に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">11</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施結果（とりまとめ報告）</div>
+                <div class="flow-step-route">県 → 国</div>
+                <div class="flow-step-note">⏰ ５月末まで</div>
+                <div class="flow-step-desc">県が市の報告をとりまとめて国に最終報告する。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
     nextScene: "scene1a"
   },
 
@@ -1426,19 +1644,34 @@ function renderScene(sceneId, addToHistory = true) {
     ? `<button class="back-btn" onclick="goBack()">◀ 前のシーンに戻る</button>`
     : `<span></span>`;
 
-  // HTML構築（シャッフル済み順で表示）
-  const choicesHTML = currentShuffledChoices.map((c, i) => `
-    <button class="choice-btn" onclick="selectChoice(${i})">${String.fromCharCode(65+i)}. ${c.text}</button>
-  `).join("");
-
-  document.getElementById("scene-content").innerHTML = `
+  const headerHTML = `
     <div class="scene-header">
       <div style="display:flex; align-items:center; gap:8px;">
         <span class="scene-badge">${scene.badge}</span>
         <span class="scene-title">${scene.title}</span>
       </div>
       ${backBtnHTML}
-    </div>
+    </div>`;
+
+  // type:"info" は選択肢なし・読んで次へ進むだけの画面
+  if (scene.type === 'info') {
+    document.getElementById("scene-content").innerHTML = `
+      ${headerHTML}
+      ${scene.content}
+      <button class="next-btn visible" id="next-btn" onclick="goNext()" style="margin:0 20px 20px;">
+        理解しました　→
+      </button>
+    `;
+    return;
+  }
+
+  // 通常シーン：選択肢をシャッフルして表示
+  const choicesHTML = currentShuffledChoices.map((c, i) => `
+    <button class="choice-btn" onclick="selectChoice(${i})">${String.fromCharCode(65+i)}. ${c.text}</button>
+  `).join("");
+
+  document.getElementById("scene-content").innerHTML = `
+    ${headerHTML}
     ${scene.content}
     <div class="question-area">
       <div class="question-text">❓ ${scene.question}</div>
