@@ -2145,10 +2145,10 @@ function renderScene(sceneId, addToHistory = true) {
   document.getElementById("progress-fill").style.width = scene.progress + "%";
   document.getElementById("progress-step").textContent = scene.progressLabel;
 
-  // 戻るボタン（履歴がある場合のみ表示）
+  // ヘッダー右側ボタン群
   const backBtnHTML = sceneHistory.length > 0
-    ? `<button class="back-btn" onclick="goBack()">◀ 前のシーンに戻る</button>`
-    : `<span></span>`;
+    ? `<button class="back-btn" onclick="goBack()">◀ 前へ</button>`
+    : ``;
 
   const headerHTML = `
     <div class="scene-header">
@@ -2156,7 +2156,10 @@ function renderScene(sceneId, addToHistory = true) {
         <span class="scene-badge">${scene.badge}</span>
         <span class="scene-title">${scene.title}</span>
       </div>
-      ${backBtnHTML}
+      <div style="display:flex; gap:6px;">
+        ${backBtnHTML}
+        <button class="back-btn" onclick="goHome()">🏠 ホーム</button>
+      </div>
     </div>`;
 
   // type:"info" は選択肢なし・読んで次へ進むだけの画面
