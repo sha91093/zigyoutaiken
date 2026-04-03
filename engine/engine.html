@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>環境保全型農業直接支払交付金 研修シミュレーション</title>
+<style>
+  :root {
+    --green-dark:  #2d6a4f;
+    --green-mid:   #40916c;
+    --green-light: #d8f3dc;
+    --green-pale:  #f0faf2;
+    --accent:      #52b788;
+    --text:        #1b2e24;
+    --text-muted:  #5a7a66;
+    --border:      #b7e4c7;
+    --white:       #ffffff;
+    --error:       #c0392b;
+    --error-bg:    #fdecea;
+    --correct:     #1a7a4a;
+    --correct-bg:  #e8f5ee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Hiragino Sans", "Meiryo", sans-serif;
+    background: var(--green-pale);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    background: var(--green-dark);
+    color: var(--white);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  }
+  header .icon { font-size: 1.6rem; }
+  header h1 { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+  header small { font-size: .75rem; opacity: .8; }
+
+  /* ── 進捗バー ── */
+  .progress-wrap {
+    background: var(--green-mid);
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label { color: var(--white); font-size: .8rem; white-space: nowrap; }
+  .progress-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,.3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--white);
+    border-radius: 4px;
+    transition: width .5s ease;
+  }
+  .progress-step {
+    color: var(--white);
+    font-size: .8rem;
+    white-space: nowrap;
+  }
+
+  /* ── メインレイアウト ── */
+  .layout {
+    max-width: 860px;
+    margin: 28px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── シナリオカード ── */
+  .scene-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .scene-header {
+    background: var(--green-light);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .scene-badge {
+    background: var(--green-dark);
+    color: var(--white);
+    font-size: .7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .scene-title { font-size: .9rem; font-weight: 700; color: var(--green-dark); }
+
+  /* ── キャラクター＋セリフ ── */
+  .dialogue-area { padding: 20px; }
+  .character-block {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .character-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--green-light);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .character-info { display: flex; flex-direction: column; gap: 4px; }
+  .character-name {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    background: var(--green-light);
+    padding: 1px 8px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .character-role { font-size: .7rem; color: var(--text-muted); }
+
+  .narration {
+    background: var(--green-pale);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .speech-bubble {
+    background: #f9f9f9;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: .95rem;
+    line-height: 1.75;
+    position: relative;
+  }
+  .speech-bubble.player {
+    background: #eaf4ff;
+    border-color: #a8c8e8;
+  }
+
+  /* ── 質問エリア ── */
+  .question-area {
+    padding: 0 20px 20px;
+  }
+  .question-text {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--green-light);
+    border-radius: 8px;
+  }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn {
+    text-align: left;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: .9rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    line-height: 1.5;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--green-pale);
+  }
+  .choice-btn:disabled { cursor: default; opacity: .7; }
+  .choice-btn.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+    color: var(--correct);
+    font-weight: 700;
+  }
+  .choice-btn.incorrect {
+    border-color: var(--error);
+    background: var(--error-bg);
+    color: var(--error);
+  }
+
+  /* ── フィードバック ── */
+  .feedback {
+    margin: 12px 20px 0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: .88rem;
+    line-height: 1.7;
+    display: none;
+  }
+  .feedback.correct {
+    background: var(--correct-bg);
+    border: 1px solid #a8d5b8;
+    color: #145a32;
+    display: block;
+  }
+  .feedback.incorrect {
+    background: var(--error-bg);
+    border: 1px solid #f1a9a0;
+    color: #7b241c;
+    display: block;
+  }
+  .feedback-icon { font-size: 1.1rem; margin-right: 6px; }
+  .feedback-title { font-weight: 700; margin-bottom: 4px; }
+
+  /* ── 次へボタン ── */
+  .next-btn {
+    margin: 16px 20px 20px;
+    background: var(--green-dark);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: none;
+    transition: background .2s;
+  }
+  .next-btn:hover { background: var(--green-mid); }
+  .next-btn.visible { display: inline-block; }
+
+  /* ── 参考パネル ── */
+  .ref-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .ref-toggle {
+    width: 100%;
+    background: var(--green-light);
+    border: none;
+    padding: 12px 20px;
+    text-align: left;
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ref-toggle:hover { background: #c5e8ce; }
+  .ref-body {
+    padding: 16px 20px;
+    font-size: .85rem;
+    line-height: 1.75;
+    display: none;
+  }
+  .ref-body.open { display: block; }
+  .ref-body h4 {
+    color: var(--green-dark);
+    margin: 12px 0 6px;
+    font-size: .85rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+  }
+  .ref-body h4:first-child { margin-top: 0; }
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+    margin-top: 6px;
+  }
+  .ref-table th, .ref-table td {
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+  }
+  .ref-table th {
+    background: var(--green-light);
+    font-weight: 700;
+    color: var(--green-dark);
+  }
+
+  /* ── 事務フロー ── */
+  .flow-phase { margin-bottom: 4px; }
+  .flow-phase-label {
+    font-size: .8rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px 6px 0 0;
+    display: inline-block;
+  }
+  .phase-apply  { background: #d8f3dc; color: #2d6a4f; }
+  .phase-report { background: #fff3cd; color: #856404; }
+  .phase-result { background: #fde8e8; color: #842029; }
+  .flow-steps {
+    border: 1px solid var(--border);
+    border-radius: 0 8px 8px 8px;
+    overflow: hidden;
+  }
+  .flow-step {
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-step-num {
+    width: 24px;
+    height: 24px;
+    background: var(--green-mid);
+    color: #fff;
+    border-radius: 50%;
+    font-size: .75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .flow-step-title { font-size: .88rem; font-weight: 700; color: var(--text); }
+  .flow-step-route {
+    font-size: .82rem;
+    color: var(--green-dark);
+    font-weight: 700;
+    margin: 2px 0;
+  }
+  .flow-step-note {
+    font-size: .78rem;
+    color: #856404;
+    background: #fff8e1;
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  .flow-step-desc { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── スタート画面 ── */
+  #start-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  #start-screen .big-icon { font-size: 4rem; margin-bottom: 16px; }
+  #start-screen h2 { font-size: 1.3rem; color: var(--green-dark); margin-bottom: 8px; }
+  #start-screen p { font-size: .9rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; }
+  .start-btn {
+    background: var(--green-dark);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .start-btn:hover { background: var(--green-mid); }
+
+  /* ── 選択後ヒント ── */
+  .review-hint {
+    font-size: .78rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding-left: 2px;
+  }
+
+  /* ── 戻るボタン ── */
+  .back-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: .8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--green-dark); }
+
+  /* ── チャプター選択メニュー ── */
+  .chapter-menu {
+    margin-top: 24px;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .chapter-menu-title {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .chapter-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: .85rem;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .2s, background .2s;
+  }
+  .chapter-btn:hover { border-color: var(--accent); background: var(--green-pale); }
+  .chapter-btn .ch-badge {
+    font-size: .7rem;
+    font-weight: 700;
+    background: var(--green-light);
+    color: var(--green-dark);
+    padding: 2px 7px;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .chapter-btn .ch-badge.info-badge {
+    background: #fff3cd;
+    color: #856404;
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header>
+  <span class="icon">🌿</span>
+  <div>
+    <h1>環境保全型農業直接支払交付金 研修シミュレーション</h1>
+    <small>自治体職員向け実務体験プログラム</small>
+  </div>
+</header>
+
+<!-- 進捗バー -->
+<div class="progress-wrap">
+  <span class="progress-label">進捗</span>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+  <span class="progress-step" id="progress-step">導入</span>
+</div>
+
+<!-- メイン -->
+<div class="layout">
+
+  <!-- シナリオカード -->
+  <div class="scene-card" id="scene-card">
+
+    <!-- スタート画面 -->
+    <div id="start-screen">
+      <div class="big-icon">🏛️</div>
+      <h2>ようこそ、農政課へ</h2>
+      <p>
+        あなたは今日から市役所農政課に配属された職員です。<br>
+        上司から「今年度の <strong>環境保全型農業直接支払交付金</strong> の担当をお願いします」<br>
+        と言われました。<br><br>
+        このシミュレーションでは、窓口相談・申請受付・審査・交付決定まで、<br>
+        実際の業務の流れを体験しながら学びます。
+      </p>
+      <button class="start-btn" onclick="startSimulation()">最初から始める</button>
+
+      <div class="chapter-menu">
+        <div class="chapter-menu-title">— または特定のシーンから始める —</div>
+        <div class="chapter-list">
+          <button class="chapter-btn" onclick="jumpTo('flow_overview')">
+            <span class="ch-badge info-badge">事務フロー</span>年間事務の流れを確認する
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene1a')">
+            <span class="ch-badge">シーン１</span>農業者が窓口相談に来る
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene2a')">
+            <span class="ch-badge">シーン２</span>書類受付・不備チェック
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene3a')">
+            <span class="ch-badge">シーン３</span>取組区分と交付金計算
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene4a')">
+            <span class="ch-badge">シーン４</span>審査中の判断事例
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene5')">
+            <span class="ch-badge info-badge">シーン５</span>計画認定から交付決定までの流れ
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene6a')">
+            <span class="ch-badge">シーン６</span>現地確認
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene7a')">
+            <span class="ch-badge">シーン７</span>実施状況報告・概算払い
+          </button>
+          <button class="chapter-btn" onclick="jumpTo('scene8a')">
+            <span class="ch-badge">シーン８</span>支払証明の受理・実績報告書の提出
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- シーンコンテンツ（JS で差し替え） -->
+    <div id="scene-content" style="display:none;"></div>
+
+  </div>
+
+  <!-- 参考パネル -->
+  <div class="ref-panel">
+    <button class="ref-toggle" onclick="toggleRef(this)">
+      📋 参考資料：制度概要・交付単価表
+      <span id="ref-arrow">▼</span>
+    </button>
+    <div class="ref-body" id="ref-body">
+      <h4>制度の目的</h4>
+      <p>化学肥料・化学合成農薬を原則５割以上低減する取組と組み合わせて行う、地球温暖化防止や生物多様性保全に効果の高い営農活動を支援する（農業の有する多面的機能の発揮の促進に関する法律に基づく）。</p>
+
+      <h4>交付金の流れ</h4>
+      <p>国 → 都道府県 → 市町村 → 農業者の組織する団体 → 農業者</p>
+
+      <h4>全国共通取組と交付単価</h4>
+      <table class="ref-table">
+        <thead>
+          <tr><th>取組区分</th><th>交付単価（10a あたり）</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>有機農業</td><td>14,000 円</td><td>化学肥料・農薬を使用しない</td></tr>
+          <tr><td>炭素貯留効果の高い有機農業（加算）</td><td>＋2,000 円</td><td>堆肥・緑肥・炭の投入のいずれか1つ以上が条件</td></tr>
+          <tr><td>カバークロップ（緑肥の施用）</td><td>8,000 円（ヒエ：7,000 円）</td><td>主作物の前後に作付け</td></tr>
+          <tr><td>堆肥の施用</td><td>4,400 円</td><td>C/N比10以上・腐熟したもの（鶏ふん主体は除外）</td></tr>
+          <tr><td>総合防除</td><td>4,000 円（そば等：2,000 円）</td><td></td></tr>
+          <tr><td>取組拡大加算</td><td>4,000 円（新規取組面積）</td><td>有機農業の新規取組者の受入・定着支援</td></tr>
+        </tbody>
+      </table>
+
+      <h4>申請要件（主なもの）</h4>
+      <ul style="padding-left:1.2em;">
+        <li>農業者の組織する団体（原則２戸以上）が基本。要件を満たす個人・法人は単独申請も可</li>
+        <li>主作物を販売目的で生産していること</li>
+        <li>化学肥料・化学合成農薬を都道府県慣行比で原則５割以上低減（または有機農業）</li>
+        <li>環境負荷低減チェックシートを提出していること（令和6年度～）</li>
+        <li>環境保全型農業の推進活動を１つ以上実施すること</li>
+        <li>市町村の計画認定を受けること</li>
+      </ul>
+
+      <h4>申請書類（主なもの）</h4>
+      <ul style="padding-left:1.2em;">
+        <li>共通様式第１号：多面的機能発揮促進事業に関する計画の認定申請書</li>
+        <li>共通様式第２号：多面的機能発揮促進事業に関する計画書</li>
+        <li>共通様式第３号：環境保全型農業直接支払に係る営農活動計画書</li>
+        <li>環境負荷低減チェックシート</li>
+      </ul>
+
+      <h4>水稲での取組（令和７年度～）</h4>
+      <p>緑肥の施用・堆肥の施用・総合防除などを水稲で行う場合、以下のメタン排出削減対策のいずれか1つ以上が必要：<br>
+      ①長期中干し（14日以上）　②前年度の湛水不実施　③前年度の秋耕（湛水４ヶ月以上前に耕うん）</p>
+
+      <h4>重複申請の禁止</h4>
+      <p>中山間地域等直接支払の集落協定において選択されている活動と同一の活動は、本交付金での申請不可。</p>
+
+      <h4>年間事務フロー</h4>
+      <table class="ref-table">
+        <thead>
+          <tr><th>フェーズ</th><th>内容</th><th>方向</th><th>期限目安</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="4" style="background:#e8f5ee;font-weight:700;vertical-align:middle;">申請・<br>認定</td>
+              <td>計画書提出</td><td>農家 → 市 → 県 → 国</td><td>６月末まで</td></tr>
+          <tr><td>計画認定・交付金割当内示</td><td>国 → 県 → 市 → 農家</td><td>—</td></tr>
+          <tr><td>交付申請</td><td>農家 → 市 → 県 → 国</td><td>—</td></tr>
+          <tr><td>交付決定</td><td>国 → 県 → 市 → 農家</td><td>—</td></tr>
+          <tr><td rowspan="4" style="background:#fff3cd;font-weight:700;vertical-align:middle;">報告・<br>支払</td>
+              <td>実施状況報告書</td><td>農家 → 市</td><td>１月末まで</td></tr>
+          <tr><td>実施状況整理表等</td><td>市 → 県</td><td>２月15日まで</td></tr>
+          <tr><td>実施状況とりまとめ報告書</td><td>県 → 国</td><td>２月末まで</td></tr>
+          <tr><td>交付請求書（概算払）</td><td>農家 → 市</td><td>—</td></tr>
+          <tr><td>交付請求書（概算払）</td><td>市 → 県</td><td>—</td></tr>
+          <tr><td rowspan="3" style="background:#fde8e8;font-weight:700;vertical-align:middle;">精算・<br>実績</td>
+              <td>交付金支払い</td><td>市 → 農家</td><td>３月末まで</td></tr>
+          <tr><td>実施結果（実績報告書）</td><td>市 → 県</td><td>５月15日まで</td></tr>
+          <tr><td>実施結果（とりまとめ報告）</td><td>県 → 国</td><td>５月末まで</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /.layout -->
+
+<script>
+// ─────────────────────────────────────────
+// データ：シーン定義
+// ─────────────────────────────────────────
+const SCENES = /*SCENES_DATA*/
+
+// シーン索引
+const SCENE_MAP = {};
+SCENES.forEach(s => SCENE_MAP[s.id] = s);
+
+// 現在のシーン
+let currentScene = null;
+let currentShuffledChoices = [];  // シャッフル済み選択肢
+let answered = false;
+let sceneHistory = [];  // 戻る用履歴スタック
+
+function shuffleChoices(choices) {
+  const arr = choices.map((c, i) => ({ ...c, _orig: i }));
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ─────────────────────────────────────────
+// UI 関数
+// ─────────────────────────────────────────
+
+function startSimulation() {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("scene-content").style.display = "block";
+  renderScene("intro");
+}
+
+function renderScene(sceneId, addToHistory = true) {
+  const scene = SCENE_MAP[sceneId];
+  if (!scene) {
+    renderEnd();
+    return;
+  }
+
+  // 現在のシーンを履歴に積む（戻る操作のときは積まない）
+  if (addToHistory && currentScene) {
+    sceneHistory.push(currentScene.id);
+  }
+
+  currentScene = scene;
+  currentShuffledChoices = shuffleChoices(scene.choices);
+  answered = false;
+
+  // 進捗更新
+  document.getElementById("progress-fill").style.width = scene.progress + "%";
+  document.getElementById("progress-step").textContent = scene.progressLabel;
+
+  // ヘッダー右側ボタン群
+  const backBtnHTML = sceneHistory.length > 0
+    ? `<button class="back-btn" onclick="goBack()">◀ 前へ</button>`
+    : ``;
+
+  const headerHTML = `
+    <div class="scene-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="scene-badge">${scene.badge}</span>
+        <span class="scene-title">${scene.title}</span>
+      </div>
+      <div style="display:flex; gap:6px;">
+        ${backBtnHTML}
+        <button class="back-btn" onclick="goHome()">🏠 ホーム</button>
+      </div>
+    </div>`;
+
+  // type:"info" は選択肢なし・読んで次へ進むだけの画面
+  if (scene.type === 'info') {
+    document.getElementById("scene-content").innerHTML = `
+      ${headerHTML}
+      ${scene.content}
+      <button class="next-btn visible" id="next-btn" onclick="goNext()" style="margin:0 20px 20px;">
+        理解しました　→
+      </button>
+    `;
+    return;
+  }
+
+  // 通常シーン：選択肢をシャッフルして表示
+  const choicesHTML = currentShuffledChoices.map((c, i) => `
+    <button class="choice-btn" onclick="selectChoice(${i})">${String.fromCharCode(65+i)}. ${c.text}</button>
+  `).join("");
+
+  document.getElementById("scene-content").innerHTML = `
+    ${headerHTML}
+    ${scene.content}
+    <div class="question-area">
+      <div class="question-text">❓ ${scene.question}</div>
+      <div class="choices" id="choices">${choicesHTML}</div>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn" onclick="goNext()">次へ進む →</button>
+  `;
+}
+
+function goBack() {
+  if (sceneHistory.length === 0) return;
+  const prevId = sceneHistory.pop();
+  renderScene(prevId, false);  // 戻る時は履歴に積まない
+}
+
+function selectChoice(index) {
+  if (answered) return;
+  answered = true;
+
+  const btns = document.querySelectorAll(".choice-btn");
+
+  // 正誤の色付け・ハンドラーを「解説表示」に切り替え
+  btns.forEach((btn, i) => {
+    if (currentShuffledChoices[i].correct) btn.classList.add("correct");
+    else if (i === index) btn.classList.add("incorrect");
+    btn.onclick = () => showFeedback(i);
+  });
+
+  // ヒント表示
+  document.getElementById("choices").insertAdjacentHTML("afterend",
+    `<p class="review-hint">💡 各選択肢をクリックして解説を確認できます</p>`);
+
+  showFeedback(index);
+  document.getElementById("next-btn").classList.add("visible");
+}
+
+function showFeedback(index) {
+  const choice = currentShuffledChoices[index];
+  const isCorrect = choice.correct;
+  const fb = document.getElementById("feedback");
+  fb.className = "feedback " + (isCorrect ? "correct" : "incorrect");
+  fb.innerHTML = `
+    <div class="feedback-title">
+      <span class="feedback-icon">${isCorrect ? "✅" : "❌"}</span>
+      ${String.fromCharCode(65 + index)}：${choice.feedback.title}
+    </div>
+    <div>${choice.feedback.body}</div>
+  `;
+}
+
+function goNext() {
+  if (currentScene.nextScene) {
+    renderScene(currentScene.nextScene);
+  } else {
+    renderEnd();
+  }
+}
+
+function renderEnd() {
+  document.getElementById("progress-fill").style.width = "100%";
+  document.getElementById("progress-step").textContent = "完了";
+  document.getElementById("scene-content").innerHTML = `
+    <div style="text-align:center; padding: 48px 24px;">
+      <div style="font-size:3rem; margin-bottom:16px;">🎉</div>
+      <h2 style="color:var(--green-dark); margin-bottom:12px;">研修シミュレーション　修了！</h2>
+      <p style="color:var(--text-muted); line-height:1.8;">
+        全シーンを完了しました。お疲れさまでした。<br><br>
+        <strong>学習した内容：</strong><br>
+        事務フロー：年間11ステップの事務の流れ<br>
+        シーン１：窓口相談・申請要件の確認・組織要件の案内<br>
+        シーン２：書類受付・不備チェック・期限対応<br>
+        シーン３：取組区分の確認・交付金額の計算<br>
+        シーン４：重複申請の判断・任意組織の要件・予算減額の説明<br>
+        シーン５：計画書提出から交付決定までの流れ<br>
+        シーン６：現地確認の実施・取組に問題があった場合の対応<br>
+        シーン７：実施状況報告・写真等の証拠確認・概算払いの流れ<br>
+        シーン８：支払証明の受理・実績報告書の県への提出<br><br>
+        実務で迷ったときは下部の参考資料パネルをご活用ください。
+      </p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:24px; flex-wrap:wrap;">
+        <button class="start-btn" onclick="goHome()" style="padding:10px 28px; font-size:.9rem;">
+          🏠 ホームに戻る
+        </button>
+        <button class="start-btn" onclick="startSimulation()" style="padding:10px 28px; font-size:.9rem; background:var(--green-mid);">
+          🔄 最初からやり直す
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function goHome() {
+  currentScene = null;
+  currentShuffledChoices = [];
+  answered = false;
+  sceneHistory = [];
+  document.getElementById("progress-fill").style.width = "0%";
+  document.getElementById("progress-step").textContent = "導入";
+  document.getElementById("start-screen").style.display = "block";
+  document.getElementById("scene-content").style.display = "none";
+  document.getElementById("scene-content").innerHTML = "";
+}
+
+function jumpTo(sceneId) {
+  currentScene = null;
+  currentShuffledChoices = [];
+  answered = false;
+  sceneHistory = [];
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("scene-content").style.display = "block";
+  renderScene(sceneId);
+}
+
+function toggleRef(btn) {
+  const body = document.getElementById("ref-body");
+  const arrow = document.getElementById("ref-arrow");
+  body.classList.toggle("open");
+  arrow.textContent = body.classList.contains("open") ? "▲" : "▼";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1481 @@
+[
+  {
+    id: "intro",
+    badge: "導入",
+    title: "農政課への配属",
+    progress: 5,
+    progressLabel: "導入",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          令和７年４月１日（火）、市役所農政課。<br>
+          あなたは今日付けで農政課に異動になりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「着任早々で悪いんだけど、今年度の <strong>環境保全型農業直接支払交付金</strong> の担当をお願いできる？<br><br>
+          農家さんから申請が来る前に、制度の仕組みをしっかり頭に入れておいてね。
+          <strong>申請受付の締め切りは６月末</strong>だから、そんなに余裕はないよ。」
+        </div>
+      </div>
+    `,
+    question: "まず何から始めますか？",
+    choices: [
+      {
+        text: "農林水産省の要綱・実施要領を読み、制度の全体像を把握する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "担当になったら、まず根拠となる要綱・実施要領を確認するのが基本です。" +
+                "農林水産省から「交付等要綱（令和７年４月１日一部改正）」と「実施要領」が公表されています。" +
+                "制度の目的・対象者・取組区分・交付単価などの全体像をつかんでおくことで、農業者への正確な案内ができます。"
+        }
+      },
+      {
+        text: "農業者へ電話して「今年も同じ手続きで大丈夫です」と伝える",
+        correct: false,
+        feedback: {
+          title: "要注意",
+          body: "毎年度、要綱や要件が改正される場合があります。" +
+                "令和６年度からは「環境負荷低減チェックシート」の提出が新要件となり、" +
+                "令和７年度からは水稲でのメタン排出削減対策が拡充されました。" +
+                "改正内容を確認せずに「同じで大丈夫」と伝えるのは誤った案内につながる恐れがあります。"
+        }
+      },
+      {
+        text: "前任者に引き継ぎ資料を求め、去年の申請書類一式を確認する",
+        correct: false,
+        feedback: {
+          title: "惜しい！",
+          body: "引き継ぎ資料の確認は必要ですが、それだけでは不十分です。" +
+                "前年度の書類はあくまで参考。最新の要綱・要領と必ず照合し、" +
+                "今年度の改正点がないか確認することが重要です。" +
+                "まず最新の要綱を読むことを優先しましょう。"
+        }
+      }
+    ],
+    nextScene: "flow_overview"
+  },
+
+  {
+    id: "flow_overview",
+    type: "info",
+    badge: "事務フロー",
+    title: "年間事務の流れを確認しよう",
+    progress: 12,
+    progressLabel: "事務フロー",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          実務を始める前に、１年間の事務の流れを確認しておきましょう。
+          市の担当者は農業者・県・国との間でどのタイミングに何をするかを把握しておくことが重要です。
+        </div>
+      </div>
+      <div style="padding: 4px 20px 20px;">
+
+        <div class="flow-phase">
+          <div class="flow-phase-label phase-apply">申請・認定フェーズ</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画書の提出</div>
+                <div class="flow-step-route">農家 → 市 → 県 → 国</div>
+                <div class="flow-step-note">⏰ ６月末まで（取組開始前）</div>
+                <div class="flow-step-desc">農業者が様式第１〜３号・チェックシートを市に提出。市は取りまとめて県経由で国に報告。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画認定・交付金割当内示</div>
+                <div class="flow-step-route">国 → 県 → 市 → 農家</div>
+                <div class="flow-step-note">⏰ 計画書提出後</div>
+                <div class="flow-step-desc">国・県が交付金の割当内示を行い、市が計画を認定して農業者に通知する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付申請</div>
+                <div class="flow-step-route">農家 → 市 → 県 → 国</div>
+                <div class="flow-step-note">⏰ 計画認定後</div>
+                <div class="flow-step-desc">認定を受けた農業者が交付金の交付申請書を市に提出。市が審査し県・国へ。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付決定</div>
+                <div class="flow-step-route">国 → 県 → 市 → 農家</div>
+                <div class="flow-step-note">⏰ 交付申請後</div>
+                <div class="flow-step-desc">国が交付決定し、県・市を通じて農業者に通知される。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-phase" style="margin-top:16px;">
+          <div class="flow-phase-label phase-report">報告・支払フェーズ（翌年１〜３月）</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況報告書</div>
+                <div class="flow-step-route">農家 → 市</div>
+                <div class="flow-step-note">⏰ １月末まで</div>
+                <div class="flow-step-desc">農業者が取組の実施状況（実施面積・取組内容等）を市に報告する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">6</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況整理表等</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ ２月15日まで</div>
+                <div class="flow-step-desc">市が農業者からの報告をとりまとめて県に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">7</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施状況とりまとめ報告書</div>
+                <div class="flow-step-route">県 → 国</div>
+                <div class="flow-step-note">⏰ ２月末まで</div>
+                <div class="flow-step-desc">県が市の報告をとりまとめて国に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">8</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付請求書（概算払）</div>
+                <div class="flow-step-route">農家 → 市</div>
+                <div class="flow-step-note">⏰ 市の定める期限まで</div>
+                <div class="flow-step-desc">農業者が交付金の交付請求書（概算払）を市に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">8-2</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付請求書（概算払）</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ 県の定める期限まで</div>
+                <div class="flow-step-desc">市が取りまとめて県に交付請求書（概算払）を提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">9</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付金支払い</div>
+                <div class="flow-step-route">市 → 農家（組織口座）</div>
+                <div class="flow-step-note">⏰ ３月末まで</div>
+                <div class="flow-step-desc">市が農業者の組織名義口座に交付金を振り込む。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-phase" style="margin-top:16px;">
+          <div class="flow-phase-label phase-result">精算・実績フェーズ（翌年度５月まで）</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">10</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施結果（実績報告書）</div>
+                <div class="flow-step-route">市 → 県</div>
+                <div class="flow-step-note">⏰ ５月15日まで</div>
+                <div class="flow-step-desc">市が実施結果の実績報告書を県に提出する。</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">11</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">実施結果（とりまとめ報告）</div>
+                <div class="flow-step-route">県 → 国</div>
+                <div class="flow-step-note">⏰ ５月末まで</div>
+                <div class="flow-step-desc">県が市の報告をとりまとめて国に最終報告する。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    nextScene: "scene1a"
+  },
+
+  // ── Phase 2：農業者が窓口相談に来る ──────────────────
+
+  {
+    id: "scene1a",
+    badge: "シーン１",
+    title: "窓口相談（１）　最初の確認",
+    progress: 25,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ５月中旬。田中太郎さん（60代・水稲農家）が市役所の窓口を訪れました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「環境にやさしい農業をしたら補助金がもらえると聞いたんですが…。
+          カバークロップっていう緑肥を試してみたいんです。申請できますか？」
+        </div>
+      </div>
+    `,
+    question: "まず何を確認しますか？",
+    choices: [
+      {
+        text: "「主作物（コメ）は販売を目的に生産されていますか？」と確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金の対象要件の第一は「主作物を販売目的で生産していること」です。" +
+                "自家消費のみの場合は対象外となります。" +
+                "田中さんのケースでは農協への出荷が想定されますが、まずこの基本要件を口頭で確認するのが適切な順序です。"
+        }
+      },
+      {
+        text: "「どんなカバークロップを考えていますか？」と取組の詳細から聞く",
+        correct: false,
+        feedback: {
+          title: "惜しい！",
+          body: "取組内容の確認も大切ですが、順序として申請要件（販売目的・化学資材低減）を先に確認するのが適切です。" +
+                "要件を満たさない場合、取組の詳細を詰めても申請できないためです。" +
+                "まず要件確認 → 次に取組詳細の流れで進めましょう。"
+        }
+      },
+      {
+        text: "「農業者コードと農地の地番を教えてください」と書類確認から入る",
+        correct: false,
+        feedback: {
+          title: "早すぎます",
+          body: "書類確認・受付手続きは、申請要件を満たすことが確認されてからの話です。" +
+                "要件確認より先に書類手続きを進めると、後から「対象外でした」となった場合に農業者に無駄な手間をかけさせてしまいます。" +
+                "まずは要件確認から始めましょう。"
+        }
+      }
+    ],
+    nextScene: "scene1b"
+  },
+
+  {
+    id: "scene1b",
+    badge: "シーン１",
+    title: "窓口相談（２）　化学資材の低減確認",
+    progress: 40,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんは「コメは農協に全量出荷しています」と答えました。<br>
+          販売目的の要件はクリアです。次の要件を確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「農薬はなるべく減らしているつもりです。化学肥料も少なめにしています。
+          でも正確に何割減らしたかは、ちゃんと計算したことがないですね…」
+        </div>
+      </div>
+    `,
+    question: "化学資材の低減について、どのように確認・案内しますか？",
+    choices: [
+      {
+        text: "「都道府県が定める慣行使用量と比較して、化学肥料・農薬ともに原則５割以上低減が必要です。一緒に使用量を整理してみましょう」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金のカバークロップ（緑肥の施用）取組には、" +
+                "「化学肥料・化学合成農薬を都道府県の慣行レベルより原則５割以上低減すること」が必須要件です。" +
+                "農業者が自己判断できない場合は、都道府県が公表する慣行使用量と実際の使用量を一緒に確認するのが丁寧な対応です。"
+        }
+      },
+      {
+        text: "「農薬を減らしているなら問題ないと思います。申請書を渡しますね」と受付を進める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "「なるべく減らしている」だけでは要件を満たすか判断できません。" +
+                "都道府県の慣行使用量との比較で「原則５割以上低減」していることが必要です。" +
+                "要件確認が不十分なまま申請書を渡すと、後から不適切な申請として問題になる可能性があります。"
+        }
+      },
+      {
+        text: "「化学肥料も農薬も一切使わない有機農業に切り替えれば申請できます」と案内する",
+        correct: false,
+        feedback: {
+          title: "情報が不正確です",
+          body: "有機農業への転換も選択肢の一つですが、カバークロップ取組の要件は「５割以上低減」であって「使用ゼロ」ではありません。" +
+                "有機農業は別の取組区分（単価14,000円/10a）です。田中さんが希望するカバークロップの要件は" +
+                "「５割以上低減＋緑肥の作付け」ですので、案内の内容が取組区分と合っていません。"
+        }
+      }
+    ],
+    nextScene: "scene1c"
+  },
+
+  {
+    id: "scene1c",
+    badge: "シーン１",
+    title: "窓口相談（３）　水稲の追加要件",
+    progress: 55,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          使用量を一緒に整理したところ、田中さんは５割以上低減の要件を満たしていることがわかりました。<br>
+          取組の詳細を詰めていきます。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「では申請できそうですね！カバークロップは 50a（田んぼ全部）でやります。
+          春にオオムギをまいて、田植え前にすき込む予定です。
+          他に何か条件はありますか？」
+        </div>
+      </div>
+    `,
+    question: "水稲でカバークロップに取り組む場合、令和７年度から追加が必要な対策を正しく案内できますか？",
+    choices: [
+      {
+        text: "「水稲での取組は、メタン排出削減対策として①長期中干し（14日以上）②前年度の湛水不実施 ③前年度の秋耕のいずれか１つ以上を併せて行う必要があります」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "令和７年度から、水稲で緑肥の施用・堆肥の施用・総合防除を行う場合は、" +
+                "水田からのメタン排出削減対策が必須となりました。" +
+                "①長期中干し（14日以上）、②前年度の湛水不実施、③前年度の秋耕（湛水４ヶ月以上前に耕うん）" +
+                "の３つのうち少なくとも１つを実施する必要があります。" +
+                "田中さんには事前に対応可能か確認しておきましょう。"
+        }
+      },
+      {
+        text: "「水稲の場合でも特に追加要件はありません。取組面積（50a）を申請書に記載してください」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "令和７年度から水稲でカバークロップ等に取り組む場合は、" +
+                "メタン排出削減対策（長期中干し・前年度湛水不実施・前年度秋耕のいずれか）が新たに必須となりました。" +
+                "この要件を案内しないと、取組実施後に要件不備で交付金が受けられなくなる可能性があります。"
+        }
+      },
+      {
+        text: "「水稲の場合は土壌診断書の提出が必要です」と案内する",
+        correct: false,
+        feedback: {
+          title: "取組区分が違います",
+          body: "土壌診断が必要なのは「堆肥の施用」や「炭素貯留効果の高い有機農業（加算）」です。" +
+                "カバークロップ（緑肥の施用）に土壌診断の要件はありません。" +
+                "取組区分ごとの要件を混同しないよう、参考資料で確認する習慣をつけましょう。"
+        }
+      }
+    ],
+    nextScene: "scene1d"
+  },
+
+  {
+    id: "scene1d",
+    badge: "シーン１",
+    title: "窓口相談（４）　申請者の組織要件",
+    progress: 62,
+    progressLabel: "窓口相談",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          要件の確認が一通り終わったところで、田中さんから追加の質問がありました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「ところで、申請は私一人でできますか？
+          集落の農家仲間に声をかけないといけませんか？
+          実は隣の鈴木さんも同じようなことを考えているみたいなんですが…」
+        </div>
+      </div>
+    `,
+    question: "申請者の組織要件について、正しく案内できますか？",
+    choices: [
+      {
+        text: "「農業者であれば誰でも一人で申請できます。組織を作る必要はありません」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "本交付金の申請主体は、原則として<b>複数の農業者で構成される任意組織</b>です。" +
+                "農業者単独での申請は例外的な扱いとなり、" +
+                "①集落の耕地面積の一定割合以上を取り組む農業者、または" +
+                "②農業者で構成される法人（農協を除く）のいずれかに該当し、" +
+                "さらに<b>市町村が特に認める場合</b>に限られます。" +
+                "「誰でも一人で申請できる」という案内は誤りです。"
+        }
+      },
+      {
+        text: "「申請は農業協同組合（農協）を通じて行う必要があります」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "農協を通じた申請は要件ではありません。" +
+                "申請者は<b>農業者の組織する任意組織</b>が基本であり、農協を経由する必要はありません。" +
+                "なお、農協自体は申請主体にはなれません（農業者で構成される法人の要件から除かれています）。" +
+                "田中さんと鈴木さんが一緒に任意組織を作って申請する方法が最もスムーズです。"
+        }
+      },
+      {
+        text: "「基本は複数農業者による任意組織での申請です。田中さん一人での申請は条件が厳しく、鈴木さんと一緒に組織を作って申請する方法をお勧めします」と案内する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金の申請主体は、<b>複数の農業者（原則２戸以上）で構成される任意組織</b>が基本です。" +
+                "組織には規約と専用口座が必要で、交付金は市町村から組織に一括して支払われます。<br><br>" +
+                "個人申請は例外的扱いで要件が厳しいため、田中さんには鈴木さんなど近隣農業者と" +
+                "任意組織を作ることを積極的に勧めましょう。" +
+                "地域住民等が加わる形の組織でも申請可能です。"
+        }
+      }
+    ],
+    nextScene: "scene2a"
+  },
+
+  // ── シーン２：書類受付・不備チェック ──────────────────
+
+  {
+    id: "scene2a",
+    badge: "シーン２",
+    title: "書類受付（１）　必要書類の確認",
+    progress: 60,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ６月上旬。田中さんが書類を持って窓口を再訪しました。
+          「一式そろえてきました」と封筒を差し出します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家・農地約 1.5ha</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「先日教えてもらった書類、全部持ってきました！
+          農林水産省のHPからダウンロードして記入したんですが、
+          これで大丈夫でしょうか？」
+        </div>
+      </div>
+    `,
+    question: "受付時に確認すべき書類セットとして正しいものはどれですか？",
+    choices: [
+      {
+        text: "①共通様式第１号（計画認定申請書）②共通様式第２号（計画書）③共通様式第３号（営農活動計画書）④環境負荷低減チェックシート　の４点を確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "申請に必要な基本書類は４点セットです。<br>" +
+                "・<b>共通様式第１号</b>：計画の認定申請書（市町村への認定申請）<br>" +
+                "・<b>共通様式第２号</b>：事業計画書（取組の内容・体制）<br>" +
+                "・<b>共通様式第３号</b>：営農活動計画書（ほ場ごとの取組・面積・交付金額）<br>" +
+                "・<b>環境負荷低減チェックシート</b>：令和６年度から必須。各取組にチェック済みか確認<br>" +
+                "なお、市町村独自の様式や添付書類を別途求める場合もあります。"
+        }
+      },
+      {
+        text: "共通様式第３号（営農活動計画書）だけ確認する。他の書類は後回しでよい",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "様式第３号はほ場別の計画を記載する重要書類ですが、それ単体では申請になりません。" +
+                "計画の認定申請書（第１号）・計画書（第２号）・環境負荷低減チェックシートも" +
+                "同時に提出が必要です。特に令和６年度から必須化されたチェックシートの確認を忘れないようにしましょう。"
+        }
+      },
+      {
+        text: "農地の登記簿謄本と身分証明書を追加で要求する",
+        correct: false,
+        feedback: {
+          title: "不要な書類です",
+          body: "環境保全型農業直接支払交付金の申請において、登記簿謄本や身分証明書は基本的に求められていません。" +
+                "必要以上の書類を農業者に求めると、申請意欲をそぎ、窓口への負担感を高めます。" +
+                "求める書類は要綱・実施要領に定められたものに限りましょう。"
+        }
+      }
+    ],
+    nextScene: "scene2b"
+  },
+
+  {
+    id: "scene2b",
+    badge: "シーン２",
+    title: "書類受付（２）　不備の発見",
+    progress: 70,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          書類を確認していると、共通様式第３号（営農活動計画書）に
+          記入漏れを発見しました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号を確認すると…田んぼは３筆あるのに、
+          うち１筆のほ場名・面積・取組区分がすべて空欄のままだ。）
+        </div>
+      </div>
+    `,
+    question: "記入漏れのほ場がある場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「お手数ですが、空欄のほ場の情報をご記入いただき、再提出をお願いします」と返却する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "申請書の内容（ほ場名・面積・取組区分）は申請者本人が確認・記入すべき事項です。" +
+                "職員が勝手に補記すると、事実と異なる記載になるリスクや、" +
+                "後の実地確認時に申請者が内容を把握していないという問題が生じます。" +
+                "必ず申請者に返却し、本人に記入してもらいましょう。"
+        }
+      },
+      {
+        text: "「わかりました、こちらで農地台帳を見て補記しておきます」と受け付ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "申請書の内容は申請者自身が責任を持って記載するものです。" +
+                "職員が農地台帳等を参照して補記することは、" +
+                "本人確認なしに申請内容を変更することになり不適切です。" +
+                "空欄があれば必ず申請者に返却して記入してもらいましょう。"
+        }
+      },
+      {
+        text: "「記入漏れの１筆は今回の申請対象から除外して、２筆分で受け付けます」と処理する",
+        correct: false,
+        feedback: {
+          title: "手続き不足です",
+          body: "１筆を除外することは可能ですが、それは申請者本人が判断・同意することです。" +
+                "職員が勝手に「除外して受け付ける」と決めてはいけません。" +
+                "「除外してよいか、それとも記入して全筆申請するか」を申請者に確認し、" +
+                "本人の意思に基づいて手続きを進めましょう。"
+        }
+      }
+    ],
+    nextScene: "scene2c"
+  },
+
+  {
+    id: "scene2c",
+    badge: "シーン２",
+    title: "書類受付（３）　期限直前の対応",
+    progress: 80,
+    progressLabel: "書類受付",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんに書類を返却して補正をお願いしました。<br>
+          ところが翌朝、上司から一言。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「田中さんの件、知ってる？今日が申請期限の６月30日だよ。
+          補正書類、今日中に来なかったらアウトになるけど、
+          ちゃんと田中さんに伝えてある？」
+        </div>
+        <div class="narration" style="margin-top:12px;">
+          田中さんに確認すると「カバークロップの作業自体は７月以降の予定です」とのことでした。
+        </div>
+      </div>
+    `,
+    question: "申請期限（本日６月30日）と取組開始時期（７月以降）について、正しい対応はどれですか？",
+    choices: [
+      {
+        text: "「申請は取組開始前に行う必要があります。本日中に補正書類をご持参いただければ、今年度の申請が可能です」と連絡する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金は「対象取組の開始前までに申請する」ことが原則であり、" +
+                "申請期限の目安は６月末です。取組開始が７月以降であれば、" +
+                "本日（６月30日）中に補正書類を提出することで今年度の申請は有効です。" +
+                "田中さんへ速やかに連絡し、本日中の持参か郵送・電子申請（eMAFF）等の方法を案内しましょう。"
+        }
+      },
+      {
+        text: "「取組開始が７月以降なら、今年度の申請は締め切りを過ぎているので来年度に申請してください」と案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "申請期限は「取組開始前」かつ「６月30日まで」です。" +
+                "取組開始が７月以降であれば、今日（６月30日）の申請は期限内です。" +
+                "補正書類を本日中に提出してもらえれば今年度の申請は可能です。" +
+                "誤った案内により機会損失を生じさせないよう、要綱の期限規定を正確に把握しましょう。"
+        }
+      },
+      {
+        text: "「書類の不備があったため当課の責任で期限を延長します」と田中さんに伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "市町村の担当者が独自に期限を延長することはできません。" +
+                "申請期限は要綱で定められており、自治体の裁量で変更できるものではありません。" +
+                "本日中の補正提出で間に合う可能性があるため、まずそちらを案内するのが正しい対応です。"
+        }
+      }
+    ],
+    nextScene: "scene3a"
+  },
+
+  // ── シーン３：取組区分と交付金計算 ──────────────────
+
+  {
+    id: "scene3a",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（１）　単価の確認",
+    progress: 83,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんの補正済み書類が提出されました。
+          内容を審査する前に、交付単価が正しく適用されているか確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号を確認すると…<br>
+          　取組区分：カバークロップ（緑肥の施用）<br>
+          　作付け作物：オオムギ　　主作物：水稲<br>
+          　取組面積：50a<br>
+          　申請者が記入した交付単価：8,000円／10a<br>
+          　…この単価は合っているか？）
+        </div>
+      </div>
+    `,
+    question: "カバークロップ（緑肥の施用）の交付単価として正しいものはどれですか？",
+    choices: [
+      {
+        text: "8,000円／10a（作付け作物がオオムギの場合）→ 申請内容は正しい",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "カバークロップ（緑肥の施用）の交付単価は <b>8,000円／10a</b> です（全国共通取組）。<br>" +
+                "ただし、作付けする緑肥の種類によって単価が変わる場合があります。<br>" +
+                "ヒエを使用する場合は <b>7,000円／10a</b> となります。<br>" +
+                "田中さんはオオムギを使用予定のため、8,000円の適用は正しい判断です。"
+        }
+      },
+      {
+        text: "4,400円／10a → 申請内容の単価が誤っているため修正を求める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "4,400円／10a は <b>堆肥の施用</b> の交付単価です。カバークロップとは別の取組区分になります。<br>" +
+                "取組区分ごとの単価を混同しないよう、参考資料の単価表で必ず確認しましょう。<br>" +
+                "カバークロップの正しい単価は 8,000円／10a（ヒエの場合は 7,000円）です。"
+        }
+      },
+      {
+        text: "14,000円／10a → 申請内容の単価が低すぎるため修正を求める",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "14,000円／10a は <b>有機農業</b>（化学肥料・農薬を一切使用しない）の交付単価です。<br>" +
+                "田中さんが申請しているのはカバークロップ（緑肥の施用）であり、" +
+                "有機農業とは異なる取組区分です。<br>" +
+                "正しい単価は 8,000円／10a です。申請内容に誤りはありません。"
+        }
+      }
+    ],
+    nextScene: "scene3b"
+  },
+
+  {
+    id: "scene3b",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（２）　金額の算出",
+    progress: 88,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          単価の確認ができました。次に交付金額の計算を確認します。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （様式第３号の計算欄を確認する。<br>
+          　取組面積：50a　単価：8,000円／10a<br>
+          　田中さんが記入した交付金額：400,000円<br>
+          　…この金額は正しいか？）
+        </div>
+      </div>
+    `,
+    question: "田中さんの交付金額（50a、カバークロップ、8,000円／10a）を正しく計算するとどうなりますか？",
+    choices: [
+      {
+        text: "40,000円　（計算式：50a ÷ 10 × 8,000円 = 40,000円）→ 田中さんの記入に誤りがある",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付単価の単位は <b>円／10a（10アール）</b> です。<br>" +
+                "計算式：取組面積（a）÷ 10 × 交付単価（円／10a）<br>" +
+                "　　　　= 50a ÷ 10 × 8,000円 = <b>40,000円</b><br><br>" +
+                "田中さんは「50a × 8,000円」と計算して 400,000円 と記入しており、" +
+                "単位（10a）を無視した計算になっています。<br>" +
+                "補正してもらうよう連絡しましょう。"
+        }
+      },
+      {
+        text: "400,000円　（計算式：50a × 8,000円 = 400,000円）→ 田中さんの記入は正しい",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付単価の単位は <b>円／10a（1アールではなく10アール）</b> です。<br>" +
+                "「50a × 8,000円」は単位を無視した誤った計算です。<br>" +
+                "正しくは「50a ÷ 10 × 8,000円 = 40,000円」となります。<br>" +
+                "単位の見落としは計算ミスの典型例です。審査時は必ず確認しましょう。"
+        }
+      },
+      {
+        text: "4,000円　（計算式：50a × 8,000円 ÷ 100 = 4,000円）→ 田中さんの記入に誤りがある",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "100 で割る根拠がありません。<br>" +
+                "正しい計算式は「取組面積（a）÷ 10 × 交付単価（円／10a）」です。<br>" +
+                "　50a ÷ 10 × 8,000円 = <b>40,000円</b><br>" +
+                "1アール（a）と 10アール（10a）の関係を整理しておきましょう。"
+        }
+      }
+    ],
+    nextScene: "scene3c"
+  },
+
+  {
+    id: "scene3c",
+    badge: "シーン３",
+    title: "取組区分と交付金計算（３）　複数取組・加算の適用",
+    progress: 93,
+    progressLabel: "交付金計算",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんの計算ミスを補正してもらっている間に、別の農業者・佐藤さんが窓口に来ました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👩‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">佐藤さん（農業者）</span>
+            <span class="character-role">野菜農家・今年度から有機農業を開始</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「今年から有機農業を始めます！農地は 20a です。
+          知り合いから『新しく有機農業を始める人には上乗せがある』と聞いたんですが、
+          私は対象になりますか？交付金はいくらになりますか？」
+        </div>
+      </div>
+    `,
+    question: "佐藤さんが今年度から有機農業を新規開始する場合（20a）、交付金の合計額はいくらですか？",
+    choices: [
+      {
+        text: "36,000円　（有機農業：20a÷10×14,000円＝28,000円　＋　取組拡大加算：20a÷10×4,000円＝8,000円）",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "有機農業を新規に開始する農業者を受け入れ・定着させる「<b>取組拡大加算</b>」が適用されます。<br>" +
+                "・有機農業（基本）：20a ÷ 10 × 14,000円 ＝ <b>28,000円</b><br>" +
+                "・取組拡大加算　　：20a ÷ 10 × 4,000円  ＝ <b>8,000円</b>（新規取組面積に対して）<br>" +
+                "　　　　　　合計 ＝ <b>36,000円</b><br><br>" +
+                "佐藤さんは今年度が初めての有機農業なので、取組拡大加算の対象になります。"
+        }
+      },
+      {
+        text: "28,000円　（有機農業のみ：20a÷10×14,000円＝28,000円）取組拡大加算は対象外",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "今年度から有機農業を<b>新規に開始</b>する農業者は「<b>取組拡大加算</b>」の対象です。<br>" +
+                "取組拡大加算（4,000円／10a）は新規取組面積に対して加算されるため、" +
+                "佐藤さんの場合は有機農業の基本額 28,000円 に加えて 8,000円 が上乗せされ、合計 36,000円 になります。<br>" +
+                "加算の存在を見落とさないよう、単価表をしっかり確認しましょう。"
+        }
+      },
+      {
+        text: "32,000円　（有機農業＋炭素貯留加算：20a÷10×(14,000＋2,000)円＝32,000円）",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "炭素貯留効果の高い有機農業の加算（2,000円／10a）は、" +
+                "堆肥の施用・緑肥の施用・炭の投入のいずれか1つ以上を <b>併せて行う場合</b> に適用されます。<br>" +
+                "佐藤さんの申請内容では炭素貯留の取組については言及がないため、この加算は適用できません。<br>" +
+                "佐藤さんに適用されるのは <b>取組拡大加算（4,000円／10a）</b> です。合計は 36,000円 になります。"
+        }
+      }
+    ],
+    nextScene: "scene4a"
+  },
+
+  // ── シーン４：審査中の判断事例 ──────────────────
+
+  {
+    id: "scene4a",
+    badge: "シーン４",
+    title: "審査中の判断事例（１）　重複申請の確認",
+    progress: 94,
+    progressLabel: "審査・判断",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          審査を進める中で、山本さんの申請に気になる点が見つかりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「山本さんの申請、カバークロップで来ているんだけど、
+          山本さんが加入している集落協定、中山間地域等直接支払の方でも
+          カバークロップを選択活動に入れているって情報が来たんだよね。
+          どう対応する？」
+        </div>
+      </div>
+    `,
+    question: "中山間地域等直接支払の集落協定でカバークロップを選択している場合の対応として正しいものはどれですか？",
+    choices: [
+      {
+        text: "「２つの制度は別々なので、同じ活動でも両方から交付金を受け取れます」と山本さんに伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "中山間地域等直接支払の集落協定において選択されている活動と<b>同一の活動</b>は、" +
+                "環境保全型農業直接支払交付金での申請が認められません。<br>" +
+                "同じ取組に対して２つの制度から交付金を受け取る重複申請は禁止されています。" +
+                "山本さんには、どちらの制度で申請するかを選択してもらう必要があります。"
+        }
+      },
+      {
+        text: "中山間地域等直接支払の集落協定でカバークロップを選択している場合、環境直払での申請はできないため、山本さんに選択を求める",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "中山間地域等直接支払の集落協定において<b>選択されている活動と同一の活動</b>は、" +
+                "環境保全型農業直接支払交付金の対象になりません（重複申請の禁止）。<br><br>" +
+                "山本さんには以下の選択肢を丁寧に説明しましょう。<br>" +
+                "・このまま中山間直払の集落協定にカバークロップを残す → 環境直払では申請不可<br>" +
+                "・中山間直払の集落協定からカバークロップを外す → 環境直払で申請可能<br><br>" +
+                "どちらが有利かは単価・面積等を比較して農業者自身に判断してもらいます。"
+        }
+      },
+      {
+        text: "どちらの制度の単価が高いか計算して、高い方に自動的に振り分ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "どちらの制度を選ぶかは<b>農業者自身が判断する</b>ことです。" +
+                "職員が勝手に振り分けることはできません。<br>" +
+                "職員の役割は、両制度の仕組みと選択肢を正確に説明し、" +
+                "農業者が自分の状況に合った判断ができるよう情報提供することです。"
+        }
+      }
+    ],
+    nextScene: "scene4b"
+  },
+
+  {
+    id: "scene4b",
+    badge: "シーン４",
+    title: "審査中の判断事例（２）　任意組織の要件確認",
+    progress: 96,
+    progressLabel: "審査・判断",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          田中さんと鈴木さんが「たんぼの会」という任意組織を作って申請書を提出しました。
+          書類を確認すると、気になる点があります。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">🧑‍💼</div>
+          <div class="character-info">
+            <span class="character-name">あなた（窓口担当）</span>
+            <span class="character-role">農政課 環境農業係</span>
+          </div>
+        </div>
+        <div class="speech-bubble player">
+          （申請書類を確認すると…<br>
+          　・共通様式第１〜３号：記入済み ✓<br>
+          　・環境負荷低減チェックシート：提出済み ✓<br>
+          　・組織の規約：提出済み ✓<br>
+          　・組織の銀行口座：…記載なし ✗<br>
+          　「たんぼの会」名義の口座の情報が一切ない。）
+        </div>
+      </div>
+    `,
+    question: "任意組織の口座情報がない場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "口座情報は任意なので、なくても受け付ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金は<b>市町村から農業者の組織する団体の口座に直接振り込まれる</b>仕組みです。<br>" +
+                "団体名義の口座は交付金を受け取るために必須であり、任意ではありません。<br>" +
+                "口座情報がなければ交付金を送金できないため、必ず補正してもらう必要があります。"
+        }
+      },
+      {
+        text: "田中さん個人の口座を代わりに使うよう案内する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金は組織（「たんぼの会」）に対して交付されるものであり、" +
+                "<b>個人名義の口座への振り込みはできません</b>。<br>" +
+                "田中さんと鈴木さんには「たんぼの会」名義の口座を新たに開設してもらい、" +
+                "その口座情報を申請書に記載してもらう必要があります。"
+        }
+      },
+      {
+        text: "「たんぼの会」名義の団体口座の情報を申請書に追記するよう、田中さんたちに補正を求める",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "任意組織が交付金を受け取るためには、<b>組織名義の専用口座</b>が必要です。<br>" +
+                "組織の要件として①規約と②専用口座の２点が必須となっています。<br><br>" +
+                "「たんぼの会」名義の口座がまだない場合は、金融機関で口座を開設してもらい、" +
+                "口座情報を記載した書類を追加提出してもらいましょう。<br>" +
+                "口座開設には時間がかかることもあるため、早めに連絡することが重要です。"
+        }
+      }
+    ],
+    nextScene: "scene4c"
+  },
+
+  {
+    id: "scene4c",
+    badge: "シーン４",
+    title: "審査中の判断事例（３）　予算超過と減額",
+    progress: 98,
+    progressLabel: "審査・判断",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          審査が完了し交付決定の準備をしていると、県から連絡が入りました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">📞</div>
+          <div class="character-info">
+            <span class="character-name">県の担当者（電話）</span>
+            <span class="character-role">都道府県農政担当</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「今年度は全国の申請総額が予算額を上回りました。
+          交付金は一定割合で減額されることになります。
+          農業者の方々への説明をよろしくお願いします。」
+        </div>
+        <div class="narration" style="margin-top:12px;">
+          田中さんから電話があり「交付金はいくらもらえますか？」と聞かれました。
+        </div>
+      </div>
+    `,
+    question: "田中さんへの説明として正しいものはどれですか？",
+    choices: [
+      {
+        text: "「申請書に記載した計算額が満額交付されます。ご安心ください」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "本交付金は<b>予算の範囲内で交付される仕組み</b>であり、満額が保証されるものではありません。<br>" +
+                "全国の申請合計額が予算額を上回った場合、交付額が減額されることがあります。<br>" +
+                "今年度はすでに減額が決定しているため、「満額交付される」という案内は誤りです。"
+        }
+      },
+      {
+        text: "「市の判断で減額しないようにしました。申請通りの金額をお支払いします」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金の減額は国の予算管理に基づくものであり、<b>市町村の判断で変更することはできません</b>。<br>" +
+                "市町村が独自に「減額しない」と決定することは制度上不可能です。<br>" +
+                "農業者への正確な情報提供のために、制度の仕組みを正しく説明しましょう。"
+        }
+      },
+      {
+        text: "「本制度は予算の範囲内での交付が原則のため、今年度は全国的な申請超過により交付額が一定割合減額される見込みです。確定次第ご連絡します」と丁寧に説明する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "本交付金は<b>予算の範囲内で交付される仕組み</b>（予算積算型）であることを農業者に正確に伝えることが重要です。<br><br>" +
+                "申請前の段階でも「予算超過の場合は減額の可能性がある」ことをあらかじめ説明しておくと、" +
+                "農業者の理解を得やすくなります。<br>" +
+                "減額割合が確定したら速やかに連絡し、最終的な交付額を通知しましょう。"
+        }
+      }
+    ],
+    nextScene: "scene5"
+  },
+
+  // ── シーン５：計画認定〜交付決定（info）──────────────────
+
+  {
+    id: "scene5",
+    type: "info",
+    badge: "シーン５",
+    title: "計画認定から交付決定までの流れ",
+    progress: 46,
+    progressLabel: "認定・決定",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          申請書類の審査が終わりました。ここからは市の担当者として、
+          計画認定から交付決定までの事務処理を確認しましょう。
+        </div>
+      </div>
+      <div style="padding: 4px 20px 20px;">
+        <div class="flow-phase">
+          <div class="flow-phase-label phase-apply">あなたが行う事務処理の流れ</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">①</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">計画書を県へ提出</div>
+                <div class="flow-step-route">市 → 県（→ 国）</div>
+                <div class="flow-step-note">⏰ ６月末まで</div>
+                <div class="flow-step-desc">
+                  申請書類の内容確認が完了したら、市として取りまとめた計画書を県へ提出する。
+                  県はさらに国へ報告する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">②</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">割当内示の受領と農業者への計画認定通知</div>
+                <div class="flow-step-route">国・県 → 市 → 農業者</div>
+                <div class="flow-step-note">⏰ 内示受領後、速やかに</div>
+                <div class="flow-step-desc">
+                  国・県から交付金の割当内示が届いたら、市として計画を認定し、
+                  農業者あてに計画認定通知書を送付する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">③</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">農家から交付申請書を受理し、県へ提出</div>
+                <div class="flow-step-route">農家 → 市 → 県（→ 国）</div>
+                <div class="flow-step-note">⏰ 県が指定する期限まで</div>
+                <div class="flow-step-desc">
+                  認定通知を受けた農業者から交付申請書を受理する。
+                  市は市作成分の交付申請書を添えて、県の指定する期限までに県へ提出する。
+                </div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">④</div>
+              <div class="flow-step-body">
+                <div class="flow-step-title">交付決定通知の受領と農業者への通知</div>
+                <div class="flow-step-route">県（国） → 市 → 農業者</div>
+                <div class="flow-step-note">⏰ 交付決定後、速やかに</div>
+                <div class="flow-step-desc">
+                  県から交付決定通知が届いたら、農業者あてに交付決定通知書を送付する。
+                  農業者はこの通知をもって、取組を開始（または継続）する。
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:.82rem; color:var(--text-muted); margin-top:12px; padding:0 4px;">
+          ※ 上記の事務処理が完了して初めて農業者は取組を行える状態になります。
+          書類が揃ったからといって農業者が勝手に取組を始めてよいわけではありません。
+        </p>
+      </div>
+    `,
+    nextScene: "scene6a"
+  },
+
+  // ── シーン６：現地確認 ──────────────────
+
+  {
+    id: "scene6a",
+    badge: "シーン６",
+    title: "現地確認（１）　確認の実施判断",
+    progress: 55,
+    progressLabel: "現地確認",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          交付決定通知を送付してしばらくすると、農業者たちは取組を開始しました。
+          ８月下旬、上司から声がかかりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍💼</div>
+          <div class="character-info">
+            <span class="character-name">上司（係長）</span>
+            <span class="character-role">農政課 環境農業係長</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「田中さんたちの取組、ちゃんと実施されているか現地確認に行かないといけないね。
+          申請書通りに取り組んでいるか確認してほしいんだけど、
+          具体的には何を確認しにいけばいい？」
+        </div>
+      </div>
+    `,
+    question: "現地確認で確認すべき事項として最も適切なものはどれですか？",
+    choices: [
+      {
+        text: "申請書（様式第３号）に記載されたほ場で、申請通りの取組（カバークロップの作付け等）が実施されているかを確認する。あわせて環境負荷低減チェックシートの取組内容も現地で確認する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "現地確認の主な目的は、<b>申請内容と実際の取組が一致しているかの確認</b>です。<br><br>" +
+                "具体的には以下を確認します。<br>" +
+                "・申請したほ場でカバークロップ等が実際に作付けされているか<br>" +
+                "・申請面積と実際の面積に大きな差異がないか<br>" +
+                "・環境負荷低減チェックシートに記載した取組（農薬・化学肥料の削減等）が実際に行われているか<br><br>" +
+                "不正や虚偽申請の抑止にもなるため、定期的な現地確認は重要な業務です。"
+        }
+      },
+      {
+        text: "農業者の農地の登記情報と実際の地番が一致しているかを法務局の資料と照合する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "現地確認の目的は登記情報の照合ではありません。<br>" +
+                "本交付金の現地確認では、<b>申請した取組が実際に行われているかどうか</b>を確認することが目的です。<br>" +
+                "カバークロップが申請ほ場で作付けされているか、農薬削減の取組が実施されているかなどを現地で直接確認しましょう。"
+        }
+      },
+      {
+        text: "農業者に農業日誌を見せてもらい、作業記録を書面で確認するだけでよい",
+        correct: false,
+        feedback: {
+          title: "不十分です",
+          body: "書面確認だけでは不十分です。<b>実際に現地（ほ場）に赴いて</b>、取組が行われているかを目視で確認することが求められます。<br>" +
+                "農業日誌等の記録の確認も補助的に行いますが、それだけでは現地確認とは言えません。<br>" +
+                "書面と現地の両方で確認することで、申請内容の適正を確保します。"
+        }
+      }
+    ],
+    nextScene: "scene6b"
+  },
+
+  {
+    id: "scene6b",
+    badge: "シーン６",
+    title: "現地確認（２）　取組に問題があった場合",
+    progress: 60,
+    progressLabel: "現地確認",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          現地確認に行ったところ、田中さんのほ場の一部でカバークロップが
+          作付けされていないことがわかりました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">水稲農家</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「あの区画は今年、排水の工事が入っちゃって
+          カバークロップを播けなかったんですよ。
+          ほかのほ場はちゃんとやっています。申請のまま大丈夫ですよね？」
+        </div>
+      </div>
+    `,
+    question: "取組が実施できなかったほ場がある場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「申請面積と実績面積が異なる場合は、実際に取り組んだ面積で交付金を算出し直す必要があります。実績報告書には実際の取組面積を正確に記載してください」と説明する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金は<b>実際に取り組んだ面積</b>に基づいて交付されます。<br>" +
+                "申請面積より実績面積が少ない場合は、実績面積で交付金を再計算します。<br><br>" +
+                "田中さんには以下を説明しましょう。<br>" +
+                "・実施できなかったほ場の面積は実績報告書に含めないこと<br>" +
+                "・交付金は実際の取組面積で計算し直すこと<br>" +
+                "・やむを得ない事情があっても、実施していない面積への交付は認められないこと"
+        }
+      },
+      {
+        text: "「やむを得ない事情があれば、取り組めなかったほ場も申請通りの面積で処理して問題ありません」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "やむを得ない事情があっても、<b>実際に取り組んでいない面積への交付金は認められません</b>。<br>" +
+                "交付金は実績（実際の取組面積）に基づいて算定されます。<br>" +
+                "申請面積のまま処理すると、不正受給となる可能性があります。<br>" +
+                "田中さんには実績報告書に実際の取組面積を正確に記載するよう指導してください。"
+        }
+      },
+      {
+        text: "取組ができなかった事情を考慮し、市の判断で今年度分の申請を全件取り消す",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "取り組めなかった<b>ほ場分だけ</b>を除外すればよく、他のほ場での適正な取組まで全件取り消す必要はありません。<br>" +
+                "田中さんは他のほ場ではカバークロップを適切に実施しています。<br>" +
+                "実施できたほ場の面積分については、正常に交付金の対象となります。"
+        }
+      }
+    ],
+    nextScene: "scene7a"
+  },
+
+  // ── シーン７：実施報告〜概算払い ──────────────────
+
+  {
+    id: "scene7a",
+    badge: "シーン７",
+    title: "実施状況報告と整理表の提出",
+    progress: 70,
+    progressLabel: "実施報告",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          取組期間が終わり、年が明けて１月になりました。
+          農業者から実施状況報告書が提出される時期です。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「実施状況報告書を持ってきました。
+          カバークロップは工事のあった区画を除いて、予定通り全部できました。
+          あと、様式に写真を貼る欄がありましたが、
+          写真撮り忘れちゃって…これは大丈夫ですか？」
+        </div>
+      </div>
+    `,
+    question: "取組の写真がない場合、どのように対応しますか？",
+    choices: [
+      {
+        text: "「写真は取組を証明する重要な書類です。撮影していない場合は今からでも現地の状況を確認させていただく必要があります。現地確認の日程を調整しましょう」と伝える",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "取組の写真や記録は、<b>取組が適切に実施されたことを証明する重要な書類</b>です。<br>" +
+                "写真がない場合、市として取組の実施を確認できないため、現地確認や代替証明の手配が必要です。<br><br>" +
+                "田中さんには今後のために、取組の各段階で写真を撮影しておくよう指導しましょう。<br>" +
+                "また、確認後は速やかに実施状況整理表を作成して、２月15日までに県へ提出します。"
+        }
+      },
+      {
+        text: "「写真はなくても問題ありません。報告書の記載内容だけで処理します」と受け付ける",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "写真等の証拠書類は取組実施の証明として重要です。<br>" +
+                "記載内容だけでは取組が実際に行われたかを確認できません。<br>" +
+                "市として適正な交付金の執行を確保するためにも、<b>写真の提出または現地確認</b>によって取組の実施を確認する必要があります。"
+        }
+      },
+      {
+        text: "「写真がないため、今年度の交付金はすべて不支給とします」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "写真がないことだけで即座に不支給とするのは対応として過剰です。<br>" +
+                "まず現地確認や別の証明方法（農業日誌、資材の購入記録等）で取組の実施を確認する機会を設けましょう。<br>" +
+                "現地確認等で取組の実施が確認できれば、交付金の支給は可能です。"
+        }
+      }
+    ],
+    nextScene: "scene7b"
+  },
+
+  {
+    id: "scene7b",
+    badge: "シーン７",
+    title: "交付請求書（概算払）の処理",
+    progress: 78,
+    progressLabel: "概算払い",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          現地確認も完了し、実施状況整理表を２月15日までに県へ提出しました。
+          続いて、交付金の支払いに向けた手続きです。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「交付請求書を持ってきました。
+          ところで、交付金って実際にいつ振り込まれますか？
+          会のメンバーに聞かれているんですが…」
+        </div>
+      </div>
+    `,
+    question: "交付金の支払い時期と流れについて、正しく案内できますか？",
+    choices: [
+      {
+        text: "「農業者団体の口座への振り込みは３月末までに行います。その後、団体内の各農業者への支払いも３月末までに完了してもらう必要があります」と説明する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "交付金の支払いフローは以下の通りです。<br><br>" +
+                "①農業者が交付請求書（概算払）を市へ提出<br>" +
+                "②市が交付請求書（概算払）を県へ提出<br>" +
+                "③県・国から市へ交付金が送金される<br>" +
+                "④市から<b>農業者団体の口座</b>へ振り込み（３月末まで）<br>" +
+                "⑤農業者団体から<b>団体内の各農業者</b>へ支払い（３月末まで）<br><br>" +
+                "交付金は農業者個人の口座ではなく、<b>団体名義の口座</b>に入金されます。" +
+                "その後、団体が各農業者に配分することを田中さんに説明しましょう。"
+        }
+      },
+      {
+        text: "「交付請求書を受理してから１週間以内に田中さん個人の口座へ振り込まれます」と伝える",
+        correct: false,
+        feedback: {
+          title: "２点が誤りです",
+          body: "①振込先は田中さん個人の口座ではなく<b>「たんぼの会」の団体名義口座</b>です。<br>" +
+                "②「１週間以内」という期限はありません。市から農業者団体への振り込みは<b>３月末まで</b>が期限です。<br><br>" +
+                "個人口座への振り込みは制度上認められていません。団体口座へ入金後、団体が各農業者へ配分します。"
+        }
+      },
+      {
+        text: "「交付請求書は来年度（４月以降）に処理するので、振り込みは４月になります」と伝える",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金の農業者団体への支払いは<b>３月末まで</b>に行うことが求められています。<br>" +
+                "４月以降になると期限超過となります。<br>" +
+                "交付請求書を受理したら速やかに処理し、３月末までに振り込みを完了させましょう。"
+        }
+      }
+    ],
+    nextScene: "scene8a"
+  },
+
+  // ── シーン８：支払証明の受理〜実績報告 ──────────────────
+
+  {
+    id: "scene8a",
+    badge: "シーン８",
+    title: "支払証明の受理と実績報告書の提出",
+    progress: 88,
+    progressLabel: "精算・実績",
+    content: `
+      <div class="dialogue-area">
+        <div class="narration">
+          ３月末に農業者団体への交付金振り込みが完了しました。
+          ４月になり、田中さんから書類が届きました。
+        </div>
+        <div class="character-block">
+          <div class="character-avatar">👨‍🌾</div>
+          <div class="character-info">
+            <span class="character-name">田中さん（農業者）</span>
+            <span class="character-role">たんぼの会 代表</span>
+          </div>
+        </div>
+        <div class="speech-bubble">
+          「団体から会員への支払いが終わりました。
+          書類を持ってきたんですが、通帳のコピーと
+          会員全員の領収書でよかったでしょうか？
+          あと、実績報告書も一緒に持ってきました。」
+        </div>
+      </div>
+    `,
+    question: "田中さんが持参した書類の確認と、この後の市の事務処理として正しいものはどれですか？",
+    choices: [
+      {
+        text: "通帳のコピーや会員の領収書で団体内の支払い完了を確認し、実績報告書を受理する。その後、５月15日までに実績報告書を県へ提出する",
+        correct: true,
+        feedback: {
+          title: "正解です！",
+          body: "この場面での事務処理は以下の通りです。<br><br>" +
+                "【４月：支払証明の受理】<br>" +
+                "・農業者団体から団体内農業者への支払いが完了したことを、<b>通帳の写しや領収書</b>等で確認する<br>" +
+                "・実績報告書を受理し、内容を確認する<br><br>" +
+                "【５月15日まで：市 → 県】<br>" +
+                "・実施結果（実績報告書）を県へ提出する<br><br>" +
+                "その後、県が５月末までに国へとりまとめ報告を行い、事業年度の事務が完了します。"
+        }
+      },
+      {
+        text: "支払証明書類は不要。実績報告書だけ受理して、すぐに県へ送付する",
+        correct: false,
+        feedback: {
+          title: "不正解",
+          body: "交付金が<b>団体内の農業者全員へ適切に配分されたか</b>を確認することは市の重要な役割です。<br>" +
+                "通帳の写しや領収書などの支払証明書類を受理して、配分が完了していることを確認してから実績報告書を処理しましょう。<br>" +
+                "支払いの確認なしに実績報告書だけ処理すると、交付金の適正な執行を確認したことにはなりません。"
+        }
+      },
+      {
+        text: "実績報告書の県への提出期限は１２月末なので、急がなくてよい",
+        correct: false,
+        feedback: {
+          title: "期限が誤りです",
+          body: "実施結果（実績報告書）の市から県への提出期限は<b>５月15日まで</b>です。<br>" +
+                "12月末という期限はありません。４月に書類を受理したら速やかに内容を確認し、<br>" +
+                "５月15日までに県へ提出できるよう準備を進めてください。"
+        }
+      }
+    ],
+    nextScene: null
+  }
+];
