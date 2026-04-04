@@ -397,9 +397,44 @@
     font-size: .8rem;
     color: var(--text-muted);
     cursor: pointer;
+    white-space: nowrap;
     transition: border-color .2s, color .2s;
   }
   .back-btn:hover { border-color: var(--accent); color: var(--green-dark); }
+
+  /* ── モバイル対応 ── */
+  @media (max-width: 480px) {
+    header { padding: 10px 14px; }
+    header h1 { font-size: .9rem; }
+
+    .layout { margin: 12px auto; padding: 0 8px; gap: 10px; }
+
+    .scene-header {
+      padding: 8px 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .scene-title { font-size: .8rem; }
+
+    .back-btn {
+      padding: 4px 8px;
+      font-size: .75rem;
+    }
+
+    .dialogue-area { padding: 14px; }
+    .character-avatar { width: 44px; height: 44px; font-size: 1.3rem; }
+
+    .question-area { padding: 14px; }
+    .question-text { font-size: .9rem; }
+    .choice-btn { font-size: .85rem; padding: 10px 14px; }
+
+    .next-btn { margin: 0 14px 14px; font-size: .9rem; }
+
+    .chapter-btn { font-size: .8rem; padding: 8px 12px; }
+
+    .ref-panel { font-size: .82rem; }
+    .ref-table th, .ref-table td { font-size: .75rem; padding: 5px 6px; }
+  }
 
   /* ── チャプター選択メニュー ── */
   .chapter-menu {
