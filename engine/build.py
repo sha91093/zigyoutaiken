@@ -46,6 +46,17 @@ def build():
 
     print(f'✅ ビルド完了: {OUTPUT_FILE}')
 
+    # index.html（ルートURLへのリダイレクト）を生成
+    index_file = os.path.join(DIST_DIR, 'index.html')
+    redirect_html = '<!DOCTYPE html><html><head><meta charset="UTF-8">' \
+        '<meta http-equiv="refresh" content="0;url=simulation.html">' \
+        '<title>リダイレクト中...</title></head>' \
+        '<body><a href="simulation.html">simulation.html へ移動</a></body></html>\n'
+    with open(index_file, 'w', encoding='utf-8') as f:
+        f.write(redirect_html)
+
+    print(f'✅ リダイレクト生成: {index_file}')
+
 
 if __name__ == '__main__':
     build()
